@@ -202,6 +202,12 @@ Nothing is broken. Everything below is either client input or the deferred deplo
 **Done 2026-07-06:** `git init` + initial commit; `foundedYear: 2005` and
 `projectsCount: 1000` confirmed by client; stray root PNG deleted.
 
+**Tooling note (2026-07-06):** `graphify` is installed — a code graph lives in
+`graphify-out/` (git-ignored) and auto-rebuilds via post-commit/post-checkout
+hooks (interpreter pinned in `.git/hooks/` — re-pin if graphify is reinstalled).
+See `CLAUDE.md` for how AI assistants should query it (`graphify explain`,
+`graphify path`, freshness check against `built_at_commit`).
+
 ## 10. "Where do I change X?" cheat sheet
 
 | Change | File |
