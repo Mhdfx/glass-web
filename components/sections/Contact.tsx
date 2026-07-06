@@ -48,7 +48,7 @@ export default function Contact() {
           <p className="section-label">Contact</p>
           <h2
             id="contact-titre"
-            className="mt-4 font-display text-3xl font-medium text-balance text-ivory-50 sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
+            className="heading-display mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
           >
             Venez voir le travail de l&apos;atelier
           </h2>

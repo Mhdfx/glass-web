@@ -20,12 +20,14 @@ export default function WhyUs() {
           <p className="section-label">Pourquoi nous</p>
           <h2
             id="pourquoi-nous-titre"
-            className="mt-4 font-display text-3xl font-medium text-balance text-ivory-50 sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
+            className="heading-display mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
           >
             Un métier d&apos;art, une exigence d&apos;ingénieur
           </h2>
         </Reveal>
 
+        {/* Rythme rompu : la carte centrale descend d'un cran sur desktop —
+            la rangée « 3 colonnes égales » devient une ligne qui respire */}
         <div className="mt-16 grid gap-6 md:grid-cols-3">
           {pillars.map((pillar, i) => {
             const Icon = pillarIcons[pillar.icon];
@@ -33,7 +35,9 @@ export default function WhyUs() {
               <Reveal
                 key={pillar.title}
                 delay={i * 0.12}
-                className="glass-panel glass-edge group rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-glass"
+                className={`glass-panel glass-edge group rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-glass ${
+                  i === 1 ? "md:mt-6" : ""
+                }`}
               >
                 <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-brass-500/25 bg-brass-500/10 text-brass-400 transition-colors duration-300 group-hover:bg-brass-500/20">
                   <Icon />

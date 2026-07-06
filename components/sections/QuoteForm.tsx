@@ -32,7 +32,7 @@ function validate(values: QuoteRequest): Errors {
 }
 
 const inputClass = (hasError: boolean) =>
-  `w-full min-h-[48px] rounded-xl border bg-ink-950/60 px-4 py-3 text-sm text-ivory-50 placeholder:text-stone-500 transition-colors duration-200 focus:border-brass-500/60 focus:outline-none ${
+  `w-full min-h-[48px] rounded-xl border bg-ink-950/60 px-4 py-3 text-sm text-ivory-50 placeholder:text-stone-500 transition-[border-color,box-shadow] duration-200 focus:border-brass-500/60 focus:shadow-[0_0_0_3px_rgb(201_166_107/0.12)] focus:outline-none ${
     hasError ? "border-red-400/60" : "border-white/10"
   }`;
 
@@ -132,7 +132,7 @@ export default function QuoteForm() {
           <p className="section-label">Devis gratuit</p>
           <h2
             id="devis-titre"
-            className="mt-4 font-display text-3xl font-medium text-balance text-ivory-50 sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
+            className="heading-display mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
           >
             Parlez-nous de votre projet
           </h2>

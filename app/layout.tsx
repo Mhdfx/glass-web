@@ -88,6 +88,8 @@ export default function RootLayout({
         />
         <SmoothScroll />
         {children}
+        {/* Grain argentique global — sous la lightbox (z-80), au-dessus du reste */}
+        <div aria-hidden className="grain-overlay" />
       </body>
     </html>
   );

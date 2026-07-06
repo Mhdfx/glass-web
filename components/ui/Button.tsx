@@ -1,7 +1,8 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
+import { ArrowRightIcon } from "@/components/ui/icons";
 
 const base =
-  "group relative inline-flex min-h-[48px] cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-full px-7 py-3 text-sm font-semibold tracking-wide transition-all duration-300 select-none";
+  "group relative inline-flex min-h-[48px] cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-full px-7 py-3 text-sm font-semibold tracking-wide transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] select-none";
 
 const variants = {
   primary:
@@ -24,13 +25,32 @@ function Shine() {
   );
 }
 
+/**
+ * Flèche nichée dans sa propre pastille — l'icône n'est jamais posée nue
+ * à côté du texte. Au survol elle glisse en diagonale : tension cinétique
+ * interne au bouton.
+ */
+function ArrowCap() {
+  return (
+    <span
+      aria-hidden
+      className="-mr-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink-950/10 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-px group-hover:scale-105"
+    >
+      <ArrowRightIcon className="h-4 w-4" />
+    </span>
+  );
+}
+
 interface ButtonLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   variant?: Variant;
+  /** Ajoute la flèche nichée en pastille à droite du libellé */
+  arrow?: boolean;
   children: ReactNode;
 }
 
 export function ButtonLink({
   variant = "primary",
+  arrow = false,
   className = "",
   children,
   ...props
@@ -39,17 +59,20 @@ export function ButtonLink({
     <a className={`${base} ${variants[variant]} ${className}`} {...props}>
       <Shine />
       {children}
+      {arrow && <ArrowCap />}
     </a>
   );
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
+  arrow?: boolean;
   children: ReactNode;
 }
 
 export function Button({
   variant = "primary",
+  arrow = false,
   className = "",
   children,
   ...props
@@ -58,6 +81,7 @@ export function Button({
     <button className={`${base} ${variants[variant]} ${className}`} {...props}>
       <Shine />
       {children}
+      {arrow && <ArrowCap />}
     </button>
   );
 }

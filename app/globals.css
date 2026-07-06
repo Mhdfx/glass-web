@@ -28,15 +28,12 @@
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
 
   /* ————— Ombres & effets ————— */
-  --shadow-glass: 0 8px 40px -12px rgb(0 0 0 / 0.55);
+  /* Ombres teintées du brun-noir de l'encre (jamais de noir pur) */
+  --shadow-glass: 0 8px 40px -12px rgb(15 10 4 / 0.6);
   --shadow-brass: 0 10px 40px -10px rgb(201 166 107 / 0.35);
 
-  --animate-shine: shine 2.8s ease-in-out infinite;
-}
-
-@keyframes shine {
-  0%, 100% { transform: translateX(-120%) skewX(-18deg); }
-  55%, 60% { transform: translateX(220%) skewX(-18deg); }
+  /* Courbe maison — décélération lourde, physique */
+  --ease-glass: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Entrée du hero en CSS pur : s'exécute dès le premier rendu,
@@ -45,10 +42,12 @@
   from {
     opacity: 0;
     transform: translateY(26px);
+    filter: blur(5px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
   }
 }
 
@@ -119,7 +118,9 @@ body {
   text-wrap: balance;
 }
 
-/* Surface « verre » — clin d'œil au matériau */
+/* Surface « verre » — clin d'œil au matériau.
+   Le rehaut interne (inset) simule l'arête polie d'une plaque de verre
+   posée dans son cadre — les cartes semblent usinées, pas plaquées. */
 @utility glass-panel {
   background: linear-gradient(
     135deg,
@@ -128,7 +129,9 @@ body {
     rgb(201 166 107 / 0.04)
   );
   border: 1px solid rgb(255 255 255 / 0.08);
-  backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    inset 0 0 0 1px rgb(255 255 255 / 0.02);
 }
 
 /* Trait lumineux en haut d'une carte (arête de verre) */
@@ -156,6 +159,44 @@ body {
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--color-brass-500);
+}
+
+/* Titre de section — Fraunces se resserre aux grands corps */
+@utility heading-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  color: var(--color-ivory-50);
+}
+
+/* ————— Grain photographique ————— */
+/* Voile de bruit fixe sur toute la page : brise la platitude numérique,
+   rappelle le tirage argentique. Fixe + pointer-events-none = aucun
+   repaint au scroll. */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* Indice de scroll du hero — dérive lente et discrète (remplace le
+   bounce par défaut, trop élastique pour l'univers de la marque) */
+@keyframes cue-drift {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(7px); opacity: 1; }
+}
+.scroll-cue {
+  animation: cue-drift 3s var(--ease-glass) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue {
+    animation: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -26,7 +26,7 @@ export default function Expertises() {
           <p className="section-label">Nos expertises</p>
           <h2
             id="expertises-titre"
-            className="mt-4 font-display text-3xl font-medium text-balance text-ivory-50 sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
+            className="heading-display mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
           >
             Toute la chaîne du verre, réalisée en interne
           </h2>

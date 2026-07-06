@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { company } from "@/data/company";
-import { CloseIcon, MenuIcon, PhoneIcon } from "@/components/ui/icons";
+import { PhoneIcon } from "@/components/ui/icons";
 
 const navLinks = [
   { href: "#accueil", label: "Accueil" },
@@ -12,9 +12,37 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
+/** Section actuellement visible — pour signaler « où on est » dans la nav */
+function useActiveSection() {
+  const [active, setActive] = useState("#accueil");
+
+  useEffect(() => {
+    const ids = navLinks.map((l) => l.href.slice(1));
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    // Bande de détection : le tiers central de l'écran — une section est
+    // « active » quand elle l'occupe. Un seul observer, aucun listener scroll.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        }
+      },
+      { rootMargin: "-35% 0px -55% 0px" },
+    );
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return active;
+}
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const active = useActiveSection();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -54,17 +82,32 @@ export default function Header() {
           </span>
         </a>
 
-        {/* Navigation desktop */}
+        {/* Navigation desktop — soulignement balayé au survol,
+            laiton permanent sur la section active */}
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Navigation principale">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-ivory-200/80 transition-colors duration-200 hover:text-brass-400"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = active === link.href;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "true" : undefined}
+                className={`group relative py-1 text-sm font-medium transition-colors duration-200 ${
+                  isActive
+                    ? "text-brass-400"
+                    : "text-ivory-200/80 hover:text-ivory-50"
+                }`}
+              >
+                {link.label}
+                <span
+                  aria-hidden
+                  className={`absolute inset-x-0 -bottom-0.5 h-px origin-right scale-x-0 bg-brass-400/70 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-left group-hover:scale-x-100 ${
+                    isActive ? "origin-left scale-x-100" : ""
+                  }`}
+                />
+              </a>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-5 lg:flex">
@@ -83,7 +126,7 @@ export default function Header() {
           </a>
         </div>
 
-        {/* Burger mobile */}
+        {/* Burger mobile — les deux barres pivotent en X, pas de swap d'icône */}
         <button
           type="button"
           className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-ivory-100 transition-colors hover:bg-white/5 lg:hidden"
@@ -91,7 +134,18 @@ export default function Header() {
           aria-expanded={open}
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
         >
-          {open ? <MenuIconClosed /> : <MenuIcon />}
+          <span aria-hidden className="relative block h-3.5 w-5">
+            <span
+              className={`absolute left-0 top-0 h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                open ? "translate-y-[6.25px] rotate-45" : ""
+              }`}
+            />
+            <span
+              className={`absolute bottom-0 left-0 h-[1.5px] w-full rounded-full bg-current transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                open ? "-translate-y-[6.25px] -rotate-45" : ""
+              }`}
+            />
+          </span>
         </button>
       </div>
 
@@ -114,7 +168,9 @@ export default function Header() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className={`border-b border-white/[0.06] py-4 font-display text-2xl text-ivory-100 transition-all duration-300 hover:text-brass-400 ${
+              className={`border-b border-white/[0.06] py-4 font-display text-2xl transition-all duration-300 hover:text-brass-400 ${
+                active === link.href ? "text-brass-400" : "text-ivory-100"
+              } ${
                 open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
               }`}
               style={{ transitionDelay: open ? `${i * 50}ms` : "0ms" }}
@@ -126,7 +182,7 @@ export default function Header() {
             <a
               href="#devis"
               onClick={() => setOpen(false)}
-              className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-brass-500 px-6 py-3 text-sm font-semibold text-ink-950"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-brass-500 px-6 py-3 text-sm font-semibold text-ink-950 transition-transform active:scale-[0.98]"
             >
               Demander un devis gratuit
             </a>
@@ -160,8 +216,4 @@ function LogoMark() {
       <line x1="7" y1="16" x2="25" y2="16" stroke="#E3C795" strokeWidth="0.8" opacity="0.8" />
     </svg>
   );
-}
-
-function MenuIconClosed() {
-  return <CloseIcon className="h-6 w-6" />;
 }

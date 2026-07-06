@@ -124,7 +124,7 @@ export default function Hero() {
           </p>
 
           <h1
-            className="hero-in mt-5 font-display text-[2.6rem] leading-[1.08] font-medium text-balance text-ivory-50 sm:text-6xl lg:text-[4.2rem]"
+            className="hero-in heading-display mt-5 text-[2.6rem] leading-[1.06] tracking-[-0.02em] sm:text-6xl lg:text-[4.6rem]"
             style={d(1)}
           >
             Miroiterie, vitraux{" "}
@@ -144,7 +144,7 @@ export default function Hero() {
           </p>
 
           <div className="hero-in mt-9 flex flex-wrap items-center gap-4" style={d(3)}>
-            <ButtonLink href="#devis" variant="primary">
+            <ButtonLink href="#devis" variant="primary" arrow>
               Demander un devis gratuit
             </ButtonLink>
             <ButtonLink
@@ -181,11 +181,11 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Indicateur de scroll */}
+      {/* Indicateur de scroll — dérive lente maison, pas de bounce élastique */}
       <a
         href="#pourquoi-nous"
         aria-label="Découvrir la suite"
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full p-2 text-stone-400 transition-colors hover:text-brass-400 motion-safe:animate-bounce [animation-duration:2.2s]"
+        className="scroll-cue absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full p-2 text-stone-400 transition-colors hover:text-brass-400"
       >
         <ChevronDownIcon className="h-6 w-6" />
       </a>

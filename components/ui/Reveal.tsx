@@ -14,7 +14,9 @@ interface RevealProps {
 }
 
 /**
- * Apparition au scroll : fade + translation verticale douce.
+ * Apparition au scroll : fade + translation + mise au point (blur → net).
+ * Le flou donne un effet « matérialisation » plus physique qu'un simple
+ * fondu — l'élément entre au foyer, comme derrière une plaque de verre.
  * Désactivée automatiquement si prefers-reduced-motion.
  */
 export default function Reveal({
@@ -32,8 +34,8 @@ export default function Reveal({
   return (
     <Tag
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y, filter: "blur(5px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-64px" }}
       transition={
         reduce
