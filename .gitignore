@@ -28,3 +28,6 @@ next-env.d.ts
 
 # raw client photos — source material, large, not served by the site
 /photos-client/
+
+# graphify — generated code graph (rebuilt by hooks / graphify update)
+graphify-out/
