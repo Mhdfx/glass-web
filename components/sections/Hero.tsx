@@ -20,11 +20,12 @@ export default function Hero() {
       id="accueil"
       className="relative flex min-h-dvh items-center overflow-hidden bg-porcelain-50"
     >
-      {/* Colonne photo — toute hauteur, désaturée vers le chrome */}
+      {/* Colonne photo — toute hauteur ; le cadrage vertical est fait par
+          object-cover (le lustre et la façade vitrée restent au centre) */}
       <div className="absolute inset-y-0 right-0 hidden w-[44%] border-l border-smoke-950/10 lg:block">
         <Image
-          src="/images/gallery/facade-lobby.jpg"
-          alt={`Lobby d'hôtel à façade vitrée toute hauteur, réalisation de l'atelier ${company.name}`}
+          src="/images/hero/hero-v2.jpg"
+          alt={`Intérieur de restaurant en marbre et verre : garde-corps vitrés, vitrines et façade toute hauteur, réalisation de l'atelier ${company.name}`}
           fill
           priority
           sizes="44vw"
@@ -76,9 +77,9 @@ export default function Hero() {
         </div>
 
         {/* Mobile : la photo devient un bandeau sous le texte */}
-        <div className="hero-in relative -mx-5 aspect-[4/3] sm:-mx-8 sm:aspect-[16/9] lg:hidden" style={d(4)}>
+        <div className="hero-in relative -mx-5 aspect-[16/9] sm:-mx-8 lg:hidden" style={d(4)}>
           <Image
-            src="/images/gallery/facade-lobby.jpg"
+            src="/images/hero/hero-v2.jpg"
             alt=""
             fill
             sizes="100vw"
