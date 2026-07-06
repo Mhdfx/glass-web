@@ -29,6 +29,7 @@ export default function Hero() {
           alt={`Intérieur de restaurant en marbre et verre : garde-corps vitrés, vitrines et façade toute hauteur, réalisation de l'atelier ${company.name}`}
           fill
           priority
+          quality={90}
           sizes="100vw"
           className="object-cover"
         />
@@ -38,10 +39,11 @@ export default function Hero() {
           aria-hidden
           className="absolute inset-0 bg-gradient-to-t from-porcelain-50 via-porcelain-50/80 to-porcelain-50/20 lg:hidden"
         />
-        {/* Voile desktop — latéral, laisse le lustre et la façade respirer */}
+        {/* Voile desktop — latéral, laisse le lustre et la façade respirer.
+            Le voile s'arrête à 70% : la moitié droite de la photo reste nette */}
         <div
           aria-hidden
-          className="absolute inset-0 hidden bg-gradient-to-r from-porcelain-50/95 via-porcelain-50/60 to-transparent lg:block"
+          className="absolute inset-0 hidden bg-gradient-to-r from-porcelain-50/95 via-porcelain-50/50 via-40% to-transparent to-70% lg:block"
         />
         {/* Voile de tête — garantit la lisibilité du header transparent */}
         <div
