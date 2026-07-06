@@ -22,6 +22,25 @@ Rules:
 - After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
 - Known quirks: the graph indexes the markdown docs (BRIEF, PLAN, HANDOFF) alongside code, so doc headings appear as nodes; `compilerOptions`/`devDependencies` rank as "god nodes" but are just config keys — ignore refactor suggestions about them.
 
+## Design skills — use when building/creating
+
+When creating or redesigning any page, component, or visual asset in this
+project, use the installed design skills instead of guessing at styling:
+
+- **`ui-ux-pro-max`** — design system generator (styles, palettes, typography,
+  stack-specific guidelines).
+- **`impeccable`** — run `/impeccable init` once per project, then use its
+  commands (`polish`, `audit`, `critique`, etc.) for design QA; a PostToolUse
+  hook already runs its detector after Edit/Write/MultiEdit on UI files.
+- **`design-motion-principles`** — for any animation/transition/hover/micro-
+  interaction work (build or audit mode).
+- **taste-skill bundle** (`brandkit`, `gpt-taste`, `high-end-visual-design`,
+  `minimalist-ui`, `industrial-brutalist-ui`, `stitch-design-taste`,
+  `design-taste-frontend`, `image-to-code`, `imagegen-frontend-web/mobile`,
+  `redesign-existing-projects`, `full-output-enforcement`) — reach for the
+  one matching the aesthetic/task at hand rather than defaulting to plain
+  Tailwind judgment.
+
 ## Key facts the graph confirms (verified 2026-07-06)
 
 - `data/company.ts` → `company` is the single source of truth: 14 importers
