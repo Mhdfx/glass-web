@@ -9,43 +9,55 @@ const d = (i: number) =>
   ({ "--hero-delay": `${0.1 + i * 0.1}s` }) as React.CSSProperties;
 
 /**
- * Hero « lumière froide » : split asymétrique. Le texte respire sur la
- * porcelaine à gauche ; à droite, la photo du lobby monte sur toute la
- * hauteur, bord à bord, séparée par un filet chrome. Composition 100%
- * statique côté serveur — l'entrée est l'animation CSS .hero-in.
+ * Hero pleine image. La photo « finition » occupe tout l'écran ; le texte
+ * se pose dessus derrière un voile de porcelaine dégradé — jamais de
+ * scrim noir sur une direction lumineuse. Le voile est latéral sur
+ * desktop (texte à gauche, matière visible à droite) et vertical sur
+ * mobile (texte ancré en bas, là où le voile est le plus dense).
+ * Entrée 100% CSS (.hero-in) : visible avant l'hydratation.
  */
 export default function Hero() {
   return (
     <section
       id="accueil"
-      className="relative flex min-h-dvh items-center overflow-hidden bg-porcelain-50"
+      className="relative flex min-h-dvh items-end overflow-hidden border-b border-smoke-950/10 lg:items-center"
     >
-      {/* Colonne photo — toute hauteur ; le cadrage vertical est fait par
-          object-cover (le lustre et la façade vitrée restent au centre) */}
-      <div className="absolute inset-y-0 right-0 hidden w-[44%] border-l border-smoke-950/10 lg:block">
+      {/* Photo pleine largeur */}
+      <div className="absolute inset-0">
         <Image
           src="/images/hero/hero-v2.jpg"
           alt={`Intérieur de restaurant en marbre et verre : garde-corps vitrés, vitrines et façade toute hauteur, réalisation de l'atelier ${company.name}`}
           fill
           priority
-          sizes="44vw"
+          sizes="100vw"
           className="object-cover"
         />
-        {/* Voile porcelaine léger : la photo rejoint la température de la page */}
+
+        {/* Voile mobile — monte du bas, le texte s'assoit dessus */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-r from-porcelain-50/35 via-transparent to-transparent"
+          className="absolute inset-0 bg-gradient-to-t from-porcelain-50 via-porcelain-50/80 to-porcelain-50/20 lg:hidden"
+        />
+        {/* Voile desktop — latéral, laisse le lustre et la façade respirer */}
+        <div
+          aria-hidden
+          className="absolute inset-0 hidden bg-gradient-to-r from-porcelain-50/95 via-porcelain-50/60 to-transparent lg:block"
+        />
+        {/* Voile de tête — garantit la lisibilité du header transparent */}
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-porcelain-50/80 to-transparent"
         />
       </div>
 
-      <div className="container-site w-full pt-[72px]">
-        <div className="max-w-xl py-16 lg:max-w-[46%] lg:py-20">
+      <div className="container-site relative w-full pt-[72px]">
+        <div className="max-w-2xl pt-10 pb-16 lg:py-24">
           <p className="section-label hero-in" style={d(0)}>
             Atelier verrier, {company.shortLocation}
           </p>
 
           <h1
-            className="hero-in heading-display mt-6 text-5xl leading-[1.04] sm:text-6xl lg:text-[4.75rem]"
+            className="hero-in heading-display mt-6 text-5xl leading-[1.04] sm:text-6xl lg:text-[5.25rem] lg:leading-[1.02]"
             style={d(1)}
           >
             Le verre, taillé pour la{" "}
@@ -53,7 +65,7 @@ export default function Hero() {
           </h1>
 
           <p
-            className="hero-in mt-6 max-w-md text-lg leading-relaxed text-smoke-600"
+            className="hero-in mt-6 max-w-md text-lg leading-relaxed text-smoke-700"
             style={d(2)}
           >
             Miroirs, vitraux et verre trempé sur-mesure, façonnés et posés par
@@ -74,17 +86,6 @@ export default function Hero() {
               Discuter sur WhatsApp
             </ButtonLink>
           </div>
-        </div>
-
-        {/* Mobile : la photo devient un bandeau sous le texte */}
-        <div className="hero-in relative -mx-5 aspect-[16/9] sm:-mx-8 lg:hidden" style={d(4)}>
-          <Image
-            src="/images/hero/hero-v2.jpg"
-            alt=""
-            fill
-            sizes="100vw"
-            className="border-y border-smoke-950/10 object-cover"
-          />
         </div>
       </div>
     </section>
