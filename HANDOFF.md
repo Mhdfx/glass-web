@@ -4,7 +4,7 @@
 > Read this file first; it explains what the site is, how it's built, where every
 > piece of data lives, what remains to be done, and how to deploy it.
 
-Last updated: 2026-07-05 · Status: **built & verified locally, NOT deployed yet** (client wants to test first).
+Last updated: 2026-07-06 · Status: **built & verified locally, NOT deployed yet** (client wants to test first; domain not purchased yet).
 
 ---
 
@@ -179,27 +179,28 @@ Nothing is broken. Everything below is either client input or the deferred deplo
 **Blocked on client information:**
 1. **3 placeholder gallery photos** — `porte-vitrail.jpg`, `coupole-vitrail.jpg`,
    `douche-italienne.jpg` are AI/abstract stand-ins (marked `[PLACEHOLDER]` in
-   `data/gallery.ts`). Replace the files in `public/images/gallery/` (keep the
-   same filenames, or update src + pick the right `span` for the new aspect ratio).
-2. **Confirm `foundedYear: 2005`** and **`projectsCount: 1000`** in `data/company.ts`.
-3. **Social links** — `company.social.instagram/facebook` are `null`; fill when available (Footer/Contact render them conditionally).
-4. **Confirm the domain** — `siteUrl: "https://chaimaeglass.ma"` drives sitemap,
-   robots, canonical/OG URLs and JSON-LD. Verify it's purchased and correct.
-5. **Exact workshop address** — Maps embed currently points at the Aïn Sebaâ
+   `data/gallery.ts`). Client says real photos exist (2026-07-06) — waiting for
+   the files. Replace in `public/images/gallery/` (keep the same filenames, or
+   update src + pick the right `span` for the new aspect ratio).
+2. **Social links** — `company.social.instagram/facebook` are `null`; fill when available (Footer/Contact render them conditionally).
+3. **Buy the domain** — `siteUrl: "https://chaimaeglass.ma"` drives sitemap,
+   robots, canonical/OG URLs and JSON-LD. Client confirmed 2026-07-06 the domain
+   is NOT purchased yet — must be bought (and DNS pointed) before deploy.
+4. **Exact workshop address** — Maps embed currently points at the Aïn Sebaâ
    neighborhood; swap `mapsEmbedUrl` for the exact-address embed if desired.
-6. **Legal page** — `app/mentions-legales/page.tsx` lacks RC/ICE registration
+5. **Legal page** — `app/mentions-legales/page.tsx` lacks RC/ICE registration
    numbers and the hosting-provider (hébergeur) section customary in Morocco;
    add once the client provides them and hosting is final.
 
 **Optional / infrastructure:**
-7. **Resend API key** if email copies of quotes are wanted (site works without).
-8. **`git init` + remote** — the project has NO version control. Required before
-   `deploy.sh` can work, and strongly recommended before further edits.
-   Suggested `.gitignore`: `node_modules/`, `.next/`, `.env`, `tsconfig.tsbuildinfo`.
-9. **Deploy** (§8) once the client approves after testing.
-10. Housekeeping: delete the stray `Generated Image July 03, 2026 - 5_24PM.png`
-    in the root (unused); `photos-client/` raw photos could be moved out of the
-    repo before pushing (large, not served).
+6. **Resend API key** if email copies of quotes are wanted (site works without).
+7. **git remote** — repo initialized with first commit 2026-07-06 (`photos-client/`
+   is git-ignored as raw source material). Still needs a remote before
+   `deploy.sh` (which runs `git pull`) can work.
+8. **Deploy** (§8) once the client approves after testing AND the domain exists.
+
+**Done 2026-07-06:** `git init` + initial commit; `foundedYear: 2005` and
+`projectsCount: 1000` confirmed by client; stray root PNG deleted.
 
 ## 10. "Where do I change X?" cheat sheet
 
