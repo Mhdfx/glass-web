@@ -16,15 +16,21 @@ export interface GalleryItem {
 }
 
 /**
- * Photos réelles de l'atelier (traitées via scripts/process-client-photos.mjs)
- * + quelques visuels d'ambiance en attendant les photos des catégories
- * vitraux et menuiserie — marqués [PLACEHOLDER] ci-dessous.
+ * Photos réelles de l'atelier (traitées via scripts/process-client-photos.mjs).
+ * Les 3 anciens visuels d'ambiance [PLACEHOLDER] (porte-vitrail, coupole-vitrail,
+ * douche-italienne) ont été retirés le 2026-07-06 à la demande du client —
+ * la catégorie « vitraux » n'a plus de photo et son filtre est masqué
+ * automatiquement (voir galleryFilters ci-dessous). Rajouter simplement un
+ * item `category: "vitraux"` quand de vraies photos arriveront : le filtre
+ * réapparaîtra tout seul.
  */
 /**
  * Chaque tuile épouse le format natif de sa photo (aucun zoom) et
  * l'ordre + les formats ferment une mosaïque exacte sur 3 colonnes :
  * square = 1×3, xtall = 1×5, wide = 2×3, tall = 1×4, std = 1×2
- * (rangées de 7.5rem — voir Gallery.tsx).
+ * (rangées de 7.5rem — voir Gallery.tsx). Total = 63 cellules = 21 rangées
+ * pleines, les 3 colonnes finissent à ras (vérifié par simulation du
+ * placement `grid-auto-flow: dense`) — préserver cet équilibre en cas d'ajout.
  */
 export const galleryItems: GalleryItem[] = [
   {
@@ -49,19 +55,6 @@ export const galleryItems: GalleryItem[] = [
     span: "tall",
   },
   {
-    src: "/images/gallery/habillage-miroir-salon.jpg",
-    alt: "Salon habillé d'un mur en panneaux de miroir biseautés avec lustres dorés",
-    caption: "Habillage mural miroir biseauté — salon, Casablanca",
-    category: "miroiterie",
-    span: "wide",
-  },
-  {
-    src: "/images/gallery/porte-vitrail.jpg",
-    alt: "Porte en vitrail de style oriental",
-    caption: "Porte en vitrail — style oriental", // [PLACEHOLDER] à remplacer par la vraie photo
-    category: "vitraux",
-  },
-  {
     src: "/images/gallery/miroir-led-marbre.jpg",
     alt: "Miroir rétroéclairé LED sur mur en marbre avec robinetterie dorée",
     caption: "Miroir LED rétroéclairé — salle de bain marbre",
@@ -74,6 +67,13 @@ export const galleryItems: GalleryItem[] = [
     caption: "Panneau miroir biseauté — esprit Art Déco",
     category: "miroiterie",
     span: "tall",
+  },
+  {
+    src: "/images/gallery/agencement-cafe.jpg",
+    alt: "Intérieur de café avec comptoirs en marbre et mezzanine",
+    caption: "Agencement bar & mezzanine — café",
+    category: "menuiserie",
+    span: "xtall",
   },
   {
     src: "/images/gallery/miroir-losange-laiton.jpg",
@@ -90,20 +90,6 @@ export const galleryItems: GalleryItem[] = [
     span: "tall",
   },
   {
-    src: "/images/gallery/coupole-vitrail.jpg",
-    alt: "Coupole en vitrail aux motifs floraux colorés",
-    caption: "Coupole en vitrail — motifs floraux", // [PLACEHOLDER] à remplacer par la vraie photo
-    category: "vitraux",
-    span: "wide",
-  },
-  {
-    src: "/images/gallery/douche-italienne.jpg",
-    alt: "Cabine de douche à l'italienne en verre trempé",
-    caption: "Douche à l'italienne — verre trempé", // [PLACEHOLDER] à remplacer par la vraie photo
-    category: "menuiserie",
-    span: "square",
-  },
-  {
     src: "/images/gallery/table-laquee.jpg",
     alt: "Table de salle à manger à plateau laqué crème avec chaises assorties",
     caption: "Plateau laqué sur-mesure — mobilier",
@@ -118,18 +104,18 @@ export const galleryItems: GalleryItem[] = [
     span: "tall",
   },
   {
-    src: "/images/gallery/agencement-cafe.jpg",
-    alt: "Intérieur de café avec comptoirs en marbre et mezzanine",
-    caption: "Agencement bar & mezzanine — café",
-    category: "menuiserie",
-    span: "xtall",
-  },
-  {
     src: "/images/gallery/table-verre.jpg",
     alt: "Table de salle à manger à plateau en verre trempé clair",
     caption: "Table à plateau en verre trempé",
     category: "menuiserie",
     span: "tall",
+  },
+  {
+    src: "/images/gallery/habillage-miroir-salon.jpg",
+    alt: "Salon habillé d'un mur en panneaux de miroir biseautés avec lustres dorés",
+    caption: "Habillage mural miroir biseauté — salon, Casablanca",
+    category: "miroiterie",
+    span: "wide",
   },
   {
     src: "/images/gallery/miroir-fume.jpg",
@@ -159,12 +145,20 @@ export const galleryItems: GalleryItem[] = [
   },
 ];
 
-export const galleryFilters = [
-  { id: "all" as const, label: "Tout" },
-  { id: "miroiterie" as const, label: "Miroiterie" },
-  { id: "vitraux" as const, label: "Vitraux" },
-  { id: "structurel" as const, label: "Structurel" },
-  { id: "menuiserie" as const, label: "Menuiserie" },
-];
+const allFilters = [
+  { id: "all", label: "Tout" },
+  { id: "miroiterie", label: "Miroiterie" },
+  { id: "vitraux", label: "Vitraux" },
+  { id: "structurel", label: "Structurel" },
+  { id: "menuiserie", label: "Menuiserie" },
+] as const;
 
-export type GalleryFilterId = (typeof galleryFilters)[number]["id"];
+/**
+ * Seules les catégories ayant au moins une photo sont proposées en filtre —
+ * un filtre qui afficherait une grille vide est masqué automatiquement.
+ */
+export const galleryFilters = allFilters.filter(
+  (f) => f.id === "all" || galleryItems.some((item) => item.category === f.id),
+);
+
+export type GalleryFilterId = (typeof allFilters)[number]["id"];

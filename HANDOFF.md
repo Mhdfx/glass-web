@@ -60,12 +60,15 @@ The other two data files follow the same pattern:
 - **`data/services.ts`** — the 4 service categories (miroiterie, vitraux,
   structurel, menuiserie) with catalogue items, plus the 3 "why us" pillars and
   the quote-form project-type options (derived from categories automatically).
-- **`data/gallery.ts`** — the 19 gallery items (src, alt, caption, category,
+- **`data/gallery.ts`** — the 16 gallery items (src, alt, caption, category,
   `span`). **`span` controls the mosaic tile shape and was deliberately chosen
   to match each photo's NATIVE aspect ratio** so photos display whole, without
   zoomed crops (a past client complaint — do not regress this). The tile
-  order + spans close an exact 3-column mosaic (row math documented at the top
-  of the file and in `Gallery.tsx`).
+  order + spans close an exact 3-column mosaic — 63 cells = 21 flush rows
+  (row math documented at the top of the file and in `Gallery.tsx`).
+  Category filters are derived from the items: a category with no photo
+  (currently `vitraux`) is hidden automatically and reappears when an item
+  with that category is added.
 
 ## 4. Project structure
 
@@ -96,7 +99,7 @@ scripts/     process-client-photos.mjs  — pipeline used on raw client photos
              (trim, mirror-flop, top-extract, attention crop → public/images/gallery)
              generate-placeholders.mjs  — generated the 3 abstract placeholder images
 photos-client/  RAW client photos (source material — not served)
-public/images/  hero/, og.jpg, expertises/ (4), gallery/ (19 processed JPGs)
+public/images/  hero/, og.jpg, expertises/ (4), gallery/ (16 processed JPGs)
 
 Dockerfile · docker-compose.yml · deploy.sh · nginx/   ← deployment (see §8)
 .env.example                                            ← env template (see §7)
@@ -130,7 +133,7 @@ Motion conventions:
 - **Stats counter (`Stats.tsx`)**: renders the final number server-side and only
   animates count-up after mount — fixed a "flashes 0" bug; keep it that way.
   `projectsCount` may be `null` in company.ts → the stat hides itself.
-- **Gallery**: 19 tiles, lightbox with keyboard nav. The first two tiles
+- **Gallery**: 16 tiles, lightbox with keyboard nav. The first two tiles
   (restaurant arch, hotel lobby) lead the gallery **per explicit client request**.
   The lobby photo was recovered from a mirrored video capture and horizontally
   flopped — that's intentional.
@@ -177,11 +180,13 @@ handles TLS, gzip, long-cache for `/_next/static/`.
 Nothing is broken. Everything below is either client input or the deferred deployment.
 
 **Blocked on client information:**
-1. **3 placeholder gallery photos** — `porte-vitrail.jpg`, `coupole-vitrail.jpg`,
-   `douche-italienne.jpg` are AI/abstract stand-ins (marked `[PLACEHOLDER]` in
-   `data/gallery.ts`). Client says real photos exist (2026-07-06) — waiting for
-   the files. Replace in `public/images/gallery/` (keep the same filenames, or
-   update src + pick the right `span` for the new aspect ratio).
+1. **Vitraux photos (optional)** — the 3 abstract placeholders (porte-vitrail,
+   coupole-vitrail, douche-italienne) were REMOVED 2026-07-06 at the client's
+   request; the gallery is now 16 tiles, all real photos, and the empty
+   `vitraux` filter hides itself. If real vitraux photos arrive later: process
+   via `scripts/process-client-photos.mjs`, add items to `data/gallery.ts`
+   with spans matching native aspect ratios, and re-check the mosaic closes
+   flush (21-row math in the file header).
 2. **Social links** — `company.social.instagram/facebook` are `null`; fill when available (Footer/Contact render them conditionally).
 3. **Buy the domain** — `siteUrl: "https://chaimaeglass.ma"` drives sitemap,
    robots, canonical/OG URLs and JSON-LD. Client confirmed 2026-07-06 the domain
