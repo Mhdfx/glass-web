@@ -63,9 +63,9 @@ export default function Header() {
     <header
       className={`fixed inset-x-0 top-0 transition-all duration-500 ${
         open
-          ? "z-[60] border-b border-white/[0.06] bg-ink-950"
+          ? "z-[60] border-b border-smoke-950/5 bg-porcelain-50"
           : scrolled
-            ? "z-50 border-b border-white/[0.06] bg-ink-950/85 backdrop-blur-md"
+            ? "z-50 border-b border-smoke-950/5 bg-porcelain-50/85 backdrop-blur-md"
             : "z-50 bg-transparent"
       }`}
     >
@@ -77,7 +77,7 @@ export default function Header() {
           aria-label={`${company.name} — retour à l'accueil`}
         >
           <LogoMark />
-          <span className="font-display text-lg font-medium tracking-wide text-ivory-50">
+          <span className="font-display text-xl font-semibold tracking-wide text-smoke-950">
             {company.name}
           </span>
         </a>
@@ -94,14 +94,14 @@ export default function Header() {
                 aria-current={isActive ? "true" : undefined}
                 className={`group relative py-1 text-sm font-medium transition-colors duration-200 ${
                   isActive
-                    ? "text-brass-400"
-                    : "text-ivory-200/80 hover:text-ivory-50"
+                    ? "text-brass-700"
+                    : "text-smoke-600 hover:text-smoke-950"
                 }`}
               >
                 {link.label}
                 <span
                   aria-hidden
-                  className={`absolute inset-x-0 -bottom-0.5 h-px origin-right scale-x-0 bg-brass-400/70 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-left group-hover:scale-x-100 ${
+                  className={`absolute inset-x-0 -bottom-0.5 h-px origin-right scale-x-0 bg-brass-600/70 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:origin-left group-hover:scale-x-100 ${
                     isActive ? "origin-left scale-x-100" : ""
                   }`}
                 />
@@ -113,14 +113,14 @@ export default function Header() {
         <div className="hidden items-center gap-5 lg:flex">
           <a
             href={`tel:+${company.phoneRaw}`}
-            className="flex items-center gap-2 text-sm font-medium text-ivory-200/80 transition-colors hover:text-brass-400"
+            className="flex items-center gap-2 text-sm font-medium text-smoke-600 transition-colors hover:text-smoke-950"
           >
             <PhoneIcon className="h-4 w-4" />
             {company.phoneDisplay}
           </a>
           <a
             href="#devis"
-            className="inline-flex min-h-[44px] cursor-pointer items-center rounded-full bg-brass-500 px-6 py-2.5 text-sm font-semibold text-ink-950 transition-all duration-300 hover:bg-brass-400 hover:shadow-brass active:scale-[0.98]"
+            className="inline-flex min-h-[44px] cursor-pointer items-center rounded-full bg-brass-500 px-6 py-2.5 text-sm font-semibold text-smoke-950 transition-all duration-300 hover:bg-brass-400 hover:shadow-brass active:scale-[0.98]"
           >
             Demander un devis
           </a>
@@ -129,7 +129,7 @@ export default function Header() {
         {/* Burger mobile — les deux barres pivotent en X, pas de swap d'icône */}
         <button
           type="button"
-          className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-ivory-100 transition-colors hover:bg-white/5 lg:hidden"
+          className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full text-smoke-950 transition-colors hover:bg-smoke-950/5 lg:hidden"
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
@@ -152,7 +152,7 @@ export default function Header() {
       {/* Menu mobile plein écran — panneau opaque qui glisse depuis la
           droite : aucun contenu de page visible pendant l'animation */}
       <div
-        className={`fixed inset-0 top-[72px] z-40 bg-ink-950 transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed inset-0 top-[72px] z-40 bg-porcelain-50 transition-transform duration-300 ease-out lg:hidden ${
           open
             ? "translate-x-0 pointer-events-auto"
             : "translate-x-full pointer-events-none"
@@ -168,8 +168,8 @@ export default function Header() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className={`border-b border-white/[0.06] py-4 font-display text-2xl transition-all duration-300 hover:text-brass-400 ${
-                active === link.href ? "text-brass-400" : "text-ivory-100"
+              className={`border-b border-smoke-950/5 py-4 font-display text-3xl font-medium transition-all duration-300 hover:text-brass-700 ${
+                active === link.href ? "text-brass-700" : "text-smoke-950"
               } ${
                 open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
               }`}
@@ -182,13 +182,13 @@ export default function Header() {
             <a
               href="#devis"
               onClick={() => setOpen(false)}
-              className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-brass-500 px-6 py-3 text-sm font-semibold text-ink-950 transition-transform active:scale-[0.98]"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-brass-500 px-6 py-3 text-sm font-semibold text-smoke-950 transition-transform active:scale-[0.98]"
             >
-              Demander un devis gratuit
+              Demander un devis
             </a>
             <a
               href={`tel:+${company.phoneRaw}`}
-              className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-white/10 px-6 py-3 text-sm font-medium text-ivory-100"
+              className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-smoke-950/15 px-6 py-3 text-sm font-medium text-smoke-900"
             >
               <PhoneIcon className="h-4 w-4" />
               {company.phoneDisplay}
@@ -213,7 +213,7 @@ function LogoMark() {
         transform="rotate(45 16 16)"
         fill="#C9A66B" opacity="0.35"
       />
-      <line x1="7" y1="16" x2="25" y2="16" stroke="#E3C795" strokeWidth="0.8" opacity="0.8" />
+      <line x1="7" y1="16" x2="25" y2="16" stroke="#A9884E" strokeWidth="0.8" opacity="0.8" />
     </svg>
   );
 }

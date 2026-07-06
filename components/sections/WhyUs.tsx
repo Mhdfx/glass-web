@@ -1,56 +1,51 @@
 import { pillars } from "@/data/services";
-import { pillarIcons } from "@/components/ui/icons";
 import Reveal from "@/components/ui/Reveal";
 
+/**
+ * « Pourquoi nous » v2 : registre d'atelier. Trois lignes éditoriales
+ * séparées par des filets chrome, numéral gravé en Cormorant à gauche.
+ * Aucune carte : l'espace et les filets organisent la lecture.
+ */
 export default function WhyUs() {
   return (
     <section
       id="pourquoi-nous"
-      className="relative bg-ink-950 py-24 sm:py-32"
+      className="bg-porcelain-50 py-24 sm:py-32"
       aria-labelledby="pourquoi-nous-titre"
     >
-      {/* Halo laiton discret */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-0 left-1/2 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-brass-500/[0.05] blur-3xl"
-      />
-
       <div className="container-site">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="section-label">Pourquoi nous</p>
+        <Reveal className="max-w-2xl">
           <h2
             id="pourquoi-nous-titre"
-            className="heading-display mt-4 text-3xl sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
+            className="heading-display text-3xl sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
           >
             Un métier d&apos;art, une exigence d&apos;ingénieur
           </h2>
         </Reveal>
 
-        {/* Rythme rompu : la carte centrale descend d'un cran sur desktop —
-            la rangée « 3 colonnes égales » devient une ligne qui respire */}
-        <div className="mt-16 grid gap-6 md:grid-cols-3">
-          {pillars.map((pillar, i) => {
-            const Icon = pillarIcons[pillar.icon];
-            return (
-              <Reveal
-                key={pillar.title}
-                delay={i * 0.12}
-                className={`glass-panel glass-edge group rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-glass ${
-                  i === 1 ? "md:mt-6" : ""
-                }`}
+        <div className="mt-14 border-y border-smoke-950/10">
+          {pillars.map((pillar, i) => (
+            <Reveal
+              key={pillar.title}
+              delay={i * 0.1}
+              className={`grid gap-4 py-10 sm:grid-cols-[6rem_1fr] lg:grid-cols-[8rem_20rem_1fr] lg:gap-10 ${
+                i > 0 ? "border-t border-smoke-950/10" : ""
+              }`}
+            >
+              <span
+                aria-hidden
+                className="font-display text-5xl leading-none font-medium text-smoke-300 lg:text-6xl"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-brass-500/25 bg-brass-500/10 text-brass-400 transition-colors duration-300 group-hover:bg-brass-500/20">
-                  <Icon />
-                </div>
-                <h3 className="mt-6 font-display text-xl text-ivory-50">
-                  {pillar.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-stone-300">
-                  {pillar.description}
-                </p>
-              </Reveal>
-            );
-          })}
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="font-display text-2xl font-medium text-smoke-950">
+                {pillar.title}
+              </h3>
+              <p className="max-w-prose leading-relaxed text-smoke-600">
+                {pillar.description}
+              </p>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

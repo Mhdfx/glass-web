@@ -63,22 +63,18 @@ export default function Stats() {
 
   return (
     <section
-      className="glass-edge relative overflow-hidden border-y border-white/[0.05] bg-ink-800 py-16 sm:py-20"
+      className="bg-porcelain-50 py-16 sm:py-20"
       aria-label="Chiffres clés"
     >
-      {/* Reflet diagonal en fond */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-1/2 left-1/4 h-[200%] w-40 rotate-[20deg] bg-gradient-to-b from-transparent via-brass-500/[0.06] to-transparent"
-      />
-
-      <div className="container-site grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
+      {/* Registre chiffré : numéraux gravés en Cormorant, filets chrome
+          entre colonnes — aucune carte, l'espace fait le travail */}
+      <div className="container-site grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4 lg:gap-x-0 lg:divide-x lg:divide-smoke-950/10">
         {stats.map((stat, i) => (
-          <Reveal key={stat.label} delay={i * 0.1} className="text-center">
-            <p className="font-display text-3xl text-brass-400 sm:text-4xl">
+          <Reveal key={stat.label} delay={i * 0.1} className="text-center lg:px-6">
+            <p className="font-display text-4xl font-medium text-smoke-950 sm:text-5xl">
               {stat.value}
             </p>
-            <p className="mx-auto mt-2 max-w-[200px] text-sm leading-snug text-stone-300">
+            <p className="mx-auto mt-2 max-w-[200px] text-sm leading-snug text-smoke-500">
               {stat.label}
             </p>
           </Reveal>

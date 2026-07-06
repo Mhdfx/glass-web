@@ -32,8 +32,8 @@ function validate(values: QuoteRequest): Errors {
 }
 
 const inputClass = (hasError: boolean) =>
-  `w-full min-h-[48px] rounded-xl border bg-ink-950/60 px-4 py-3 text-sm text-ivory-50 placeholder:text-stone-500 transition-[border-color,box-shadow] duration-200 focus:border-brass-500/60 focus:shadow-[0_0_0_3px_rgb(201_166_107/0.12)] focus:outline-none ${
-    hasError ? "border-red-400/60" : "border-white/10"
+  `w-full min-h-[48px] rounded-lg border bg-porcelain-50 px-4 py-3 text-sm text-smoke-950 placeholder:text-smoke-400 transition-[border-color,box-shadow] duration-200 focus:border-brass-600/60 focus:shadow-[0_0_0_3px_rgb(169_136_78/0.14)] focus:outline-none ${
+    hasError ? "border-red-500/60" : "border-smoke-950/15"
   }`;
 
 export default function QuoteForm() {
@@ -119,16 +119,11 @@ export default function QuoteForm() {
     <section
       ref={sectionRef}
       id="devis"
-      className="relative overflow-hidden bg-ink-900 py-24 sm:py-32"
+      className="bg-porcelain-50 py-24 sm:py-32"
       aria-labelledby="devis-titre"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute right-0 bottom-0 h-[500px] w-[500px] translate-x-1/3 translate-y-1/3 rounded-full bg-brass-500/[0.06] blur-3xl"
-      />
-
-      <div className="container-site grid items-start gap-12 lg:grid-cols-[1fr_1.2fr]">
-        <Reveal>
+      <div className="container-site">
+        <Reveal className="mx-auto max-w-2xl text-center">
           <p className="section-label">Devis gratuit</p>
           <h2
             id="devis-titre"
@@ -136,45 +131,43 @@ export default function QuoteForm() {
           >
             Parlez-nous de votre projet
           </h2>
-          <p className="mt-5 leading-relaxed text-stone-300">
-            Décrivez votre besoin — nous revenons vers vous rapidement sur
+          <p className="mt-5 leading-relaxed text-smoke-600">
+            Décrivez votre besoin : nous revenons vers vous rapidement sur
             WhatsApp avec une estimation et, si besoin, une prise de mesure à
             domicile.
           </p>
-          <ul className="mt-8 space-y-3 text-sm text-ivory-200/80">
+          <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-smoke-700">
             {[
               "Réponse rapide sur WhatsApp",
-              "Prise de mesure et conseil sur place",
-              "Devis détaillé sans engagement",
+              "Prise de mesure sur place",
+              "Sans engagement",
             ].map((line) => (
-              <li key={line} className="flex items-center gap-3">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-brass-500/30 bg-brass-500/10">
-                  <CheckIcon className="h-3.5 w-3.5 text-brass-400" />
-                </span>
+              <li key={line} className="flex items-center gap-2.5">
+                <CheckIcon className="h-4 w-4 text-brass-600" />
                 {line}
               </li>
             ))}
           </ul>
         </Reveal>
 
-        <Reveal delay={0.12}>
+        <Reveal delay={0.12} className="mx-auto mt-12 max-w-3xl">
           {status === "sent" ? (
-            <div className="glass-panel glass-edge rounded-2xl p-10 text-center">
-              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-brass-500/30 bg-brass-500/10">
-                <CheckIcon className="h-7 w-7 text-brass-400" />
+            <div className="pane rounded-2xl p-10 text-center">
+              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-brass-600/30 bg-brass-500/10">
+                <CheckIcon className="h-7 w-7 text-brass-600" />
               </span>
-              <h3 className="mt-6 font-display text-2xl text-ivory-50">
+              <h3 className="mt-6 font-display text-2xl font-medium text-smoke-950">
                 Votre demande est prête
               </h3>
-              <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-stone-300">
-                WhatsApp s&apos;est ouvert avec votre message pré-rempli —
-                envoyez-le pour finaliser votre demande de devis. Nous vous
+              <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-smoke-600">
+                WhatsApp s&apos;est ouvert avec votre message pré-rempli.
+                Envoyez-le pour finaliser votre demande de devis, nous vous
                 répondons au plus vite.
               </p>
               <button
                 type="button"
                 onClick={() => setStatus("idle")}
-                className="mt-6 cursor-pointer text-sm font-semibold text-brass-400 transition-colors hover:text-brass-300"
+                className="mt-6 cursor-pointer text-sm font-semibold text-brass-700 transition-colors hover:text-brass-600"
               >
                 Envoyer une autre demande
               </button>
@@ -183,12 +176,12 @@ export default function QuoteForm() {
             <form
               onSubmit={onSubmit}
               noValidate
-              className="glass-panel glass-edge rounded-2xl p-6 sm:p-8"
+              className="pane rounded-2xl p-6 sm:p-10"
             >
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="quote-name" className="mb-1.5 block text-sm font-medium text-ivory-200">
-                    Nom complet <span className="text-brass-400">*</span>
+                  <label htmlFor="quote-name" className="mb-1.5 block text-sm font-medium text-smoke-800">
+                    Nom complet <span className="text-brass-700">*</span>
                   </label>
                   <input
                     id="quote-name"
@@ -203,15 +196,15 @@ export default function QuoteForm() {
                     className={inputClass(!!err("name"))}
                   />
                   {err("name") && (
-                    <p id="quote-name-error" role="alert" className="mt-1.5 text-xs text-red-300">
+                    <p id="quote-name-error" role="alert" className="mt-1.5 text-xs text-red-600">
                       {err("name")}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="quote-phone" className="mb-1.5 block text-sm font-medium text-ivory-200">
-                    Téléphone / WhatsApp <span className="text-brass-400">*</span>
+                  <label htmlFor="quote-phone" className="mb-1.5 block text-sm font-medium text-smoke-800">
+                    Téléphone / WhatsApp <span className="text-brass-700">*</span>
                   </label>
                   <input
                     id="quote-phone"
@@ -226,15 +219,15 @@ export default function QuoteForm() {
                     className={inputClass(!!err("phone"))}
                   />
                   {err("phone") && (
-                    <p id="quote-phone-error" role="alert" className="mt-1.5 text-xs text-red-300">
+                    <p id="quote-phone-error" role="alert" className="mt-1.5 text-xs text-red-600">
                       {err("phone")}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="quote-city" className="mb-1.5 block text-sm font-medium text-ivory-200">
-                    Ville <span className="text-brass-400">*</span>
+                  <label htmlFor="quote-city" className="mb-1.5 block text-sm font-medium text-smoke-800">
+                    Ville <span className="text-brass-700">*</span>
                   </label>
                   <input
                     id="quote-city"
@@ -249,15 +242,15 @@ export default function QuoteForm() {
                     className={inputClass(!!err("city"))}
                   />
                   {err("city") && (
-                    <p id="quote-city-error" role="alert" className="mt-1.5 text-xs text-red-300">
+                    <p id="quote-city-error" role="alert" className="mt-1.5 text-xs text-red-600">
                       {err("city")}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="quote-projectType" className="mb-1.5 block text-sm font-medium text-ivory-200">
-                    Type de projet <span className="text-brass-400">*</span>
+                  <label htmlFor="quote-projectType" className="mb-1.5 block text-sm font-medium text-smoke-800">
+                    Type de projet <span className="text-brass-700">*</span>
                   </label>
                   <select
                     id="quote-projectType"
@@ -266,27 +259,27 @@ export default function QuoteForm() {
                     onBlur={blur("projectType")}
                     aria-invalid={!!err("projectType")}
                     aria-describedby={err("projectType") ? "quote-projectType-error" : undefined}
-                    className={`${inputClass(!!err("projectType"))} cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23857c6b%22%20stroke-width%3D%221.5%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:18px] bg-[position:right_14px_center] bg-no-repeat pr-11 ${values.projectType ? "" : "text-stone-500"}`}
+                    className={`${inputClass(!!err("projectType"))} cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23697077%22%20stroke-width%3D%221.5%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:18px] bg-[position:right_14px_center] bg-no-repeat pr-11 ${values.projectType ? "" : "text-smoke-400"}`}
                   >
                     <option value="" disabled>
                       Choisir…
                     </option>
                     {projectTypes.map((type) => (
-                      <option key={type} value={type} className="bg-ink-900 text-ivory-100">
+                      <option key={type} value={type} className="bg-white text-smoke-950">
                         {type}
                       </option>
                     ))}
                   </select>
                   {err("projectType") && (
-                    <p id="quote-projectType-error" role="alert" className="mt-1.5 text-xs text-red-300">
+                    <p id="quote-projectType-error" role="alert" className="mt-1.5 text-xs text-red-600">
                       {err("projectType")}
                     </p>
                   )}
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label htmlFor="quote-description" className="mb-1.5 block text-sm font-medium text-ivory-200">
-                    Description du projet <span className="text-brass-400">*</span>
+                  <label htmlFor="quote-description" className="mb-1.5 block text-sm font-medium text-smoke-800">
+                    Description du projet <span className="text-brass-700">*</span>
                   </label>
                   <textarea
                     id="quote-description"
@@ -304,11 +297,11 @@ export default function QuoteForm() {
                     className={`${inputClass(!!err("description"))} resize-y`}
                   />
                   {err("description") ? (
-                    <p id="quote-description-error" role="alert" className="mt-1.5 text-xs text-red-300">
+                    <p id="quote-description-error" role="alert" className="mt-1.5 text-xs text-red-600">
                       {err("description")}
                     </p>
                   ) : (
-                    <p id="quote-description-help" className="mt-1.5 text-xs text-stone-500">
+                    <p id="quote-description-help" className="mt-1.5 text-xs text-smoke-500">
                       Dimensions approximatives, pièce concernée, délais souhaités…
                     </p>
                   )}
@@ -342,7 +335,7 @@ export default function QuoteForm() {
                   ? "Préparation…"
                   : "Envoyer ma demande sur WhatsApp"}
               </Button>
-              <p className="mt-3 text-center text-xs text-stone-500">
+              <p className="mt-3 text-center text-xs text-smoke-500">
                 En envoyant, WhatsApp s&apos;ouvre avec votre message
                 pré-rempli — rien n&apos;est envoyé sans votre confirmation.
               </p>

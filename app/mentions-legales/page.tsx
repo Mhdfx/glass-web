@@ -12,16 +12,16 @@ export default function MentionsLegales() {
     <main className="container-site max-w-3xl py-24">
       <Link
         href="/"
-        className="text-sm font-semibold text-brass-400 transition-colors hover:text-brass-300"
+        className="text-sm font-semibold text-brass-700 transition-colors hover:text-brass-600"
       >
         ← Retour au site
       </Link>
 
-      <h1 className="mt-6 font-display text-3xl font-medium text-ivory-50 sm:text-4xl">
+      <h1 className="heading-display mt-6 text-3xl sm:text-4xl">
         Mentions légales
       </h1>
 
-      <div className="mt-10 space-y-10 text-sm leading-relaxed text-stone-300 [&_h2]:font-display [&_h2]:text-xl [&_h2]:text-ivory-50 [&_p]:mt-3">
+      <div className="mt-10 space-y-10 text-sm leading-relaxed text-smoke-600 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-medium [&_h2]:text-smoke-950 [&_p]:mt-3">
         <section>
           <h2>Éditeur du site</h2>
           <p>

@@ -18,7 +18,7 @@ export default function WhatsAppFloat() {
         className="absolute inset-0 -z-10 animate-ping rounded-full bg-whatsapp/40 [animation-duration:2.5s] [animation-iteration-count:3] motion-reduce:hidden"
       />
       <WhatsAppIcon className="h-7 w-7" />
-      <span className="pointer-events-none absolute right-full mr-3 rounded-lg bg-ink-800 px-3 py-1.5 text-xs font-medium whitespace-nowrap text-ivory-100 opacity-0 shadow-glass transition-opacity duration-200 group-hover:opacity-100 max-sm:hidden">
+      <span className="pointer-events-none absolute right-full mr-3 rounded-lg bg-smoke-900 px-3 py-1.5 text-xs font-medium whitespace-nowrap text-porcelain-50 opacity-0 transition-opacity duration-200 group-hover:opacity-100 max-sm:hidden">
         Discuter sur WhatsApp
       </span>
     </a>
