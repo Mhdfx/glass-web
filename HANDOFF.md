@@ -182,6 +182,11 @@ to deploy yet** — they want to test first. When green-lit:
 The app container binds to `127.0.0.1:3000` only; Nginx is the public entry,
 handles TLS, gzip, long-cache for `/_next/static/`.
 
+`.dockerignore` (added 2026-07-07) keeps node_modules, AI-tooling folders,
+raw photos, scripts and internal docs out of the build context — the final
+image contains only the standalone server, static chunks and `public/`.
+Secrets never enter the image: compose passes `.env` at runtime (`env_file`).
+
 ## 9. ✅ REMAINING WORK (the actual to-do list)
 
 Nothing is broken. Everything below is either client input or the deferred deployment.

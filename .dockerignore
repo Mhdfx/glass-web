@@ -1,0 +1,63 @@
+# ============================================================
+# .dockerignore — keeps the Docker build context minimal.
+# NOTE: these files stay in git (deploy.sh pulls the repo on the
+# VPS); they are only excluded from the image build. The final
+# runner stage ships nothing but standalone + static + public.
+# ============================================================
+
+# ————— 1. Build & cache (rebuilt inside the image) —————
+node_modules
+.next
+out
+*.tsbuildinfo
+npm-debug.log*
+
+# ————— 2. Dev tooling & AI-assistant configs —————
+.git
+.gitignore
+graphify-out
+.claude
+.cursor
+.codex
+.agents
+.github
+.windsurf
+.warp
+.trae
+.factory
+.kilocode
+.kiro
+.opencode
+.qoder
+.roo
+.gemini
+.augment
+.continue
+.codebuddy
+.impeccable
+skills-lock.json
+
+# ————— 3. Source assets & dev scripts (site serves public/ only) —————
+photos-client
+scripts
+
+# ————— 4. Planning / internal docs —————
+CLAUDE.md
+HANDOFF.md
+TEMPLATE.md
+WHATS-NEEDED.md
+needed.md
+PLAN.md
+README.md
+playbook
+
+# ————— 5. Env & local-only files (compose passes .env at runtime) —————
+.env
+.env.*
+next-env.d.ts
+
+# ————— Deployment files (used on the host, not inside the image) —————
+Dockerfile
+docker-compose.yml
+deploy.sh
+nginx

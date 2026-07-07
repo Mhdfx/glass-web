@@ -53,6 +53,7 @@
 | `Dockerfile`, `docker-compose.yml`, `deploy.sh`, `nginx/` | Deployment kit for the Contabo VPS. |
 | `.env.example` | Env template (→ `.env` on the server; all vars optional). |
 | `.gitignore` | Keeps groups above out of git where appropriate. |
+| `.dockerignore` | Keeps groups 1-3 + docs out of the Docker build context — the image ships only the standalone build + public assets. |
 
 ## 5. Outside the repo (machine-level — backed up in `playbook/`)
 
