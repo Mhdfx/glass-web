@@ -192,6 +192,14 @@ tool; the actual env is `%APPDATA%\uv\tools\graphifyy\Scripts\python.exe`).
    mechanically — always install BOTH the CLAUDE.md block (step 5) and
    the hooks together.
 
+**Skill-installer gotcha (learned 2026-07-07)**: installers drop duplicate
+skill bundles for many AI editors (`.cursor`, `.codex`, `.agents`, …) AND
+may create `.claude/skills/*` entries as Windows **junctions into
+`.agents/skills/`**. Before deleting the unused mirror folders, check
+`Get-ChildItem .claude\skills | ? LinkType` — materialize junctions into
+real folders first (delete link with `cmd /c rmdir`, then `git restore`
+the path), or Claude loses those skills.
+
 Honest scope note: on a ~40-file one-pager the graph's value is mostly the
 freshness-checked `explain`/`path` queries and validating the
 single-source-of-truth rule (company.ts importers, no cycles). It earns
