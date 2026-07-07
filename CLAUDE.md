@@ -1,5 +1,11 @@
 # Project knowledge — where to look
 
+> **This project is the reference implementation for the reusable
+> business-onepager template.** The full feature/pattern inventory lives in
+> `TEMPLATE.md` (repo root); the distilled cross-project playbook lives at
+> `~/.claude/playbooks/business-onepager-playbook.md`. Keep both in sync
+> when patterns here evolve.
+
 Two complementary sources. Use BOTH before working on this codebase:
 
 1. **`graphify-out/` (code graph)** — structure: who imports what, call
