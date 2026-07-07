@@ -4,10 +4,6 @@ import { whatsappLink } from "@/lib/whatsapp";
 import { ButtonLink } from "@/components/ui/Button";
 import { WhatsAppIcon } from "@/components/ui/icons";
 
-/** Délai de cascade pour l'animation CSS d'entrée (voir globals.css) */
-const d = (i: number) =>
-  ({ "--hero-delay": `${0.1 + i * 0.1}s` }) as React.CSSProperties;
-
 /**
  * Hero pleine image. La photo « finition » occupe tout l'écran ; le texte
  * se pose dessus derrière un voile de porcelaine dégradé — jamais de
@@ -54,27 +50,25 @@ export default function Hero() {
 
       <div className="container-site relative w-full pt-[72px]">
         <div className="max-w-2xl pt-10 pb-16 lg:py-24">
-          <p className="section-label hero-in" style={d(0)}>
+          <p className="section-label hero-in hero-d0">
             Atelier verrier, {company.shortLocation}
           </p>
 
           <h1
-            className="hero-in heading-display mt-6 text-5xl leading-[1.04] sm:text-6xl lg:text-[5.25rem] lg:leading-[1.02]"
-            style={d(1)}
+            className="hero-in hero-d1 heading-display mt-6 text-5xl leading-[1.04] sm:text-6xl lg:text-[5.25rem] lg:leading-[1.02]"
           >
             Le verre, taillé pour la{" "}
             <em className="font-semibold text-brass-600">lumière</em>.
           </h1>
 
           <p
-            className="hero-in mt-6 max-w-md text-lg leading-relaxed text-smoke-700"
-            style={d(2)}
+            className="hero-in hero-d2 mt-6 max-w-md text-lg leading-relaxed text-smoke-700"
           >
             Miroirs, vitraux et verre trempé sur-mesure, façonnés et posés par
             notre atelier depuis {company.foundedYear}.
           </p>
 
-          <div className="hero-in mt-9 flex flex-wrap items-center gap-4" style={d(3)}>
+          <div className="hero-in hero-d3 mt-9 flex flex-wrap items-center gap-4">
             <ButtonLink href="#devis" variant="primary" arrow>
               Demander un devis
             </ButtonLink>

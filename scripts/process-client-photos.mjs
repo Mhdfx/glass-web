@@ -41,8 +41,9 @@ const jobs = [
   // ————— Reste du fonds photo — tout le catalogue en galerie —————
   { src: "photo-02.jpeg", out: "gallery/table-laquee.jpg", w: 1200, h: 1600, crop: "center" },
   { src: "photo-03.jpeg", out: "gallery/table-verre.jpg", w: 1200, h: 1600, crop: "center" },
-  // Petit visuel source (300px) — tuile standard volontairement limitée
-  { src: "photo-04.jpeg", out: "gallery/miroir-led-modele.jpg", w: 800, h: 555, crop: "center" },
+  // photo-04 (300px) retirée de la galerie — remplacée par
+  // gallery/vitrine-comptoir.jpg, détail extrait de photos-client/finition-01
+  // (crop 320,420 853x640 sur la version 1920px → 800x600, lanczos + sharpen)
   { src: "photo-08.jpeg", out: "gallery/miroirs-organiques.jpg", w: 1200, h: 1600, crop: "center" },
   { src: "photo-11.jpeg", out: "gallery/miroir-fume.jpg", w: 1200, h: 1600, crop: "center" },
   { src: "photo-14.jpeg", out: "gallery/garde-corps-vue.jpg", w: 1200, h: 832, crop: "attention" },
@@ -79,14 +80,25 @@ for (const job of jobs) {
     });
   }
 
+  // Jamais d'upscale : la sortie est plafonnée à la zone de recadrage
+  // native (l'agrandissement rendait les tuiles floues — le navigateur
+  // agrandit mieux une image nette que nous une image gonflée)
+  const dims = job.extractTop
+    ? { width: meta.width, height: Math.min(job.extractTop, meta.height) }
+    : { width: meta.width, height: meta.height };
+  const aspect = job.w / job.h;
+  const regionW = Math.min(dims.width, dims.height * aspect);
+  const outW = Math.min(job.w, Math.floor(regionW));
+  const outH = Math.round(outW / aspect);
+
   await img
-    .resize(job.w, job.h, { fit: "cover", position: positions[job.crop] })
+    .resize(outW, outH, { fit: "cover", position: positions[job.crop] })
     // Légère mise en valeur — subtile, pas de filtre visible
     .modulate({ brightness: 1.03, saturation: 1.07 })
     .sharpen({ sigma: 0.7 })
-    .jpeg({ quality: 80, mozjpeg: true })
+    .jpeg({ quality: 82, mozjpeg: true })
     .toFile(dest);
 
-  console.log(`✓ ${job.out}  (${meta.width}x${meta.height} → ${job.w}x${job.h}, ${job.crop})`);
+  console.log(`✓ ${job.out}  (${meta.width}x${meta.height} → ${outW}x${outH}, ${job.crop})`);
 }
 console.log(`\n${jobs.length} images traitées.`);

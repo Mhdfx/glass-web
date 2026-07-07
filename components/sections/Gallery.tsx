@@ -18,8 +18,12 @@ import {
 export default function Gallery() {
   const [filter, setFilter] = useState<GalleryFilterId>("all");
   const [lightbox, setLightbox] = useState<number | null>(null);
+  // Ratio natif de la photo affichée — le cadre épouse l'image (pas de
+  // bandes vides sur les portraits) ; null tant que l'image n'est pas lue
+  const [ratio, setRatio] = useState<number | null>(null);
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
 
   const visible =
     filter === "all"
@@ -45,6 +49,14 @@ export default function Gallery() {
     },
     [visible.length],
   );
+
+  // À chaque changement d'image : ratio remis à zéro (le cadre reprend sa
+  // taille par défaut le temps du chargement) et focus sur le bouton
+  // Fermer — le clavier (Échap, flèches) agit à coup sûr dans la boîte
+  useEffect(() => {
+    setRatio(null);
+    if (lightbox !== null) closeBtnRef.current?.focus();
+  }, [lightbox]);
 
   // Clavier + verrouillage du scroll pendant la lightbox
   // + fermeture automatique si l'utilisateur navigue via une ancre
@@ -212,15 +224,29 @@ export default function Gallery() {
               className="relative mx-4 w-full max-w-5xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Hauteur basée sur l'écran : tous les formats tiennent,
-                  la légende et les contrôles restent toujours visibles */}
-              <div className="relative h-[66dvh] w-full overflow-hidden rounded-xl sm:h-[74dvh]">
+              {/* Hauteur basée sur l'écran ; dès que le ratio natif est
+                  connu, le cadre épouse exactement l'image — aucune bande
+                  vide sur les photos portrait */}
+              <div
+                className={`relative mx-auto h-[66dvh] overflow-hidden rounded-xl sm:h-[74dvh] ${
+                  ratio
+                    ? "w-[min(100%,calc(var(--lb-r)*66dvh))] sm:w-[min(100%,calc(var(--lb-r)*74dvh))]"
+                    : "w-full"
+                }`}
+                style={ratio ? ({ "--lb-r": ratio } as React.CSSProperties) : undefined}
+              >
                 <Image
                   src={visible[lightbox].src}
                   alt={visible[lightbox].alt}
                   fill
                   sizes="(min-width: 1280px) 1024px, 100vw"
                   className="object-contain"
+                  onLoad={(e) => {
+                    const img = e.currentTarget;
+                    if (img.naturalWidth && img.naturalHeight) {
+                      setRatio(img.naturalWidth / img.naturalHeight);
+                    }
+                  }}
                 />
               </div>
               <figcaption className="mt-4 text-center text-sm text-ivory-200/80">
@@ -232,6 +258,7 @@ export default function Gallery() {
 
               {/* Contrôles — croix ancrée au viewport, jamais hors écran */}
               <button
+                ref={closeBtnRef}
                 type="button"
                 onClick={close}
                 aria-label="Fermer"

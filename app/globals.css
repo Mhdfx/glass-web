@@ -66,8 +66,15 @@
 
 .hero-in {
   animation: hero-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: var(--hero-delay, 0s);
 }
+
+/* Cascade d'entrée — classes plutôt que style inline (une custom property
+   dans style={} déclenche de faux positifs d'hydratation en dev React 19) */
+.hero-d0 { animation-delay: 0.1s; }
+.hero-d1 { animation-delay: 0.2s; }
+.hero-d2 { animation-delay: 0.3s; }
+.hero-d3 { animation-delay: 0.4s; }
+.hero-d4 { animation-delay: 0.5s; }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-in {
