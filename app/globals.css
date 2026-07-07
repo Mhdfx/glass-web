@@ -14,7 +14,8 @@
   --color-smoke-900: #212428;
   --color-smoke-700: #43484e;
   --color-smoke-600: #565c63;
-  --color-smoke-500: #697077;
+  /* 4.77:1 sur porcelain-100 — AA garanti sur toutes les surfaces claires */
+  --color-smoke-500: #646b72;
   --color-smoke-400: #8f959c;
   --color-smoke-300: #b4bac0;
 
@@ -166,6 +167,13 @@ body {
     transparent 1px,
     transparent 14px
   );
+}
+
+/* Le bouton WhatsApp flottant s'efface pendant que le menu mobile est
+   ouvert (sinon il chevauche les liens du menu sur petit écran) */
+html[data-menu-open] .wa-float {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* ————— Grain photographique ————— */

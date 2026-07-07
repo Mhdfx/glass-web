@@ -132,10 +132,12 @@ export const galleryItems: GalleryItem[] = [
     span: "tall",
   },
   {
-    src: "/images/gallery/miroir-led-modele.jpg",
-    alt: "Miroir de salle de bain rétroéclairé LED au-dessus d'une vasque",
-    caption: "Miroir LED — modèle sur commande",
-    category: "miroiterie",
+    // Remplace l'ancien « miroir LED » (source 300px, trop faible) —
+    // détail 4:3 natif extrait de la photo « finition » haute qualité
+    src: "/images/gallery/vitrine-comptoir.jpg",
+    alt: "Comptoirs en marbre surmontés de vitrines en verre dans un café",
+    caption: "Vitrines et comptoirs en verre — café",
+    category: "menuiserie",
   },
   {
     src: "/images/gallery/garde-corps-vue.jpg",

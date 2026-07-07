@@ -51,11 +51,14 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Bloque le scroll derrière le menu mobile
+  // Bloque le scroll derrière le menu mobile + signale l'état au reste de
+  // la page (le bouton WhatsApp flottant se masque via html[data-menu-open])
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
+    document.documentElement.toggleAttribute("data-menu-open", open);
     return () => {
       document.documentElement.style.overflow = "";
+      document.documentElement.removeAttribute("data-menu-open");
     };
   }, [open]);
 
