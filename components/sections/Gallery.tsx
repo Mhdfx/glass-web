@@ -75,15 +75,14 @@ export default function Gallery() {
     <section
       ref={sectionRef}
       id="galerie"
-      className="bg-ink-950 py-24 sm:py-32"
+      className="border-y border-smoke-950/5 bg-porcelain-100 py-24 sm:py-32"
       aria-labelledby="galerie-titre"
     >
       <div className="container-site">
         <Reveal className="max-w-2xl">
-          <p className="section-label">Galerie</p>
           <h2
             id="galerie-titre"
-            className="mt-4 font-display text-3xl font-medium text-balance text-ivory-50 sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
+            className="heading-display text-3xl sm:text-4xl lg:text-[2.75rem] lg:leading-tight"
           >
             Nos réalisations
           </h2>
@@ -106,19 +105,19 @@ export default function Gallery() {
                   onClick={() => setFilter(f.id)}
                   className={`relative min-h-[44px] cursor-pointer rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 ${
                     active
-                      ? "text-ink-950"
-                      : "text-ivory-200/70 hover:text-ivory-50"
+                      ? "text-porcelain-50"
+                      : "text-smoke-600 hover:text-smoke-950"
                   }`}
                 >
                   {active && (
                     <motion.span
                       layoutId="gallery-filter-pill"
-                      className="absolute inset-0 rounded-full bg-brass-500"
+                      className="absolute inset-0 rounded-full bg-smoke-950"
                       transition={{ duration: reduce ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}
                     />
                   )}
                   {!active && (
-                    <span className="absolute inset-0 rounded-full border border-white/10" />
+                    <span className="absolute inset-0 rounded-full border border-smoke-950/15" />
                   )}
                   <span className="relative">{f.label}</span>
                 </button>
@@ -156,7 +155,7 @@ export default function Gallery() {
                   type="button"
                   onClick={() => setLightbox(index)}
                   aria-label={`Agrandir : ${item.caption}`}
-                  className="group relative block h-full w-full cursor-zoom-in overflow-hidden rounded-xl border border-white/[0.05]"
+                  className="group relative block h-full w-full cursor-zoom-in overflow-hidden rounded-2xl border border-smoke-950/10"
                 >
                   <Image
                     src={item.src}
@@ -180,11 +179,11 @@ export default function Gallery() {
           </AnimatePresence>
         </motion.ul>
 
-        <p className="mt-8 text-center text-sm text-stone-500">
-          Chaque pièce est unique — votre projet mérite le même soin.{" "}
+        <p className="mt-8 text-center text-sm text-smoke-500">
+          Chaque pièce est unique, votre projet mérite le même soin.{" "}
           <a
             href="#devis"
-            className="font-semibold text-brass-400 transition-colors hover:text-brass-300"
+            className="font-semibold text-brass-700 transition-colors hover:text-brass-600"
           >
             Parlons-en
           </a>

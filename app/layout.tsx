@@ -1,14 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Manrope } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { company, yearsOfExperience } from "@/data/company";
 import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
-const fraunces = Fraunces({
+/* Cormorant Garamond : ses pleins et déliés très fins évoquent la gravure
+   sur verre — remplace Fraunces dans la direction « lumière froide » (v2) */
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-cormorant",
   display: "swap",
-  axes: ["opsz"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
 });
 
 const manrope = Manrope({
@@ -48,7 +51,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B0A08",
+  themeColor: "#F7F8F9",
   width: "device-width",
   initialScale: 1,
 };
@@ -80,7 +83,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="fr" className={`${fraunces.variable} ${manrope.variable}`}>
+    <html lang="fr" className={`${cormorant.variable} ${manrope.variable}`}>
       <body>
         <script
           type="application/ld+json"
@@ -88,6 +91,8 @@ export default function RootLayout({
         />
         <SmoothScroll />
         {children}
+        {/* Grain argentique global — sous la lightbox (z-80), au-dessus du reste */}
+        <div aria-hidden className="grain-overlay" />
       </body>
     </html>
   );

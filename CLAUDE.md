@@ -25,10 +25,47 @@ Rules:
 ## Design skills — use when building/creating
 
 When creating or redesigning any page, component, or visual asset in this
-project, use the installed design skills instead of guessing at styling:
+project, use the installed design skills instead of guessing at styling.
 
-- **`ui-ux-pro-max`** — design system generator (styles, palettes, typography,
-  stack-specific guidelines).
+### ui-ux-pro-max (MANDATORY for UI/UX work)
+
+Skill path: `.claude/skills/ui-ux-pro-max/` (also mirrored under `.cursor/skills/`).
+
+**Before writing or changing UI code**, read `.claude/skills/ui-ux-pro-max/SKILL.md`
+and run its Python scripts — do not skip straight to Tailwind guesses.
+
+**When to use (must):** new pages/sections, component create/refactor, palette/
+typography/spacing decisions, UX or a11y review, navigation/motion/responsive
+work, pre-launch UI polish.
+
+**When to skip:** pure backend, API/DB, infra, non-visual scripts.
+
+**Workflow (Windows — use `python`, not `python3`):**
+
+1. **Design system first** (required for new UI or redesign scope):
+   ```powershell
+   python .claude/skills/ui-ux-pro-max/scripts/search.py "luxury artisan glass workshop landing page dark premium" --design-system -p "Chaimae Glass" --stack nextjs
+   ```
+2. **Targeted lookups** when you need one domain:
+   ```powershell
+   python .claude/skills/ui-ux-pro-max/scripts/search.py "<keyword>" --domain ux
+   python .claude/skills/ui-ux-pro-max/scripts/search.py "<keyword>" --domain style
+   python .claude/skills/ui-ux-pro-max/scripts/search.py "<keyword>" --stack nextjs
+   ```
+3. **Persist** only when starting a major redesign (creates `design-system/`):
+   ```powershell
+   python .claude/skills/ui-ux-pro-max/scripts/search.py "<query>" --design-system --persist -p "Chaimae Glass"
+   ```
+
+**Project constraints — apply recommendations through the existing brand, not
+over it:** Chaimae Glass already commits to dark luxury, Fraunces + Manrope,
+gold/bronze accents, Lenis + Framer Motion. Use ui-ux-pro-max for patterns,
+contrast/a11y checks, layout/UX rules, and Next.js stack guidance — do not
+swap fonts, palette, or motion stack unless the user explicitly asks for a
+rebrand. Cross-check with `HANDOFF.md` and live components before changing tokens.
+
+### Other design skills
+
 - **`impeccable`** — run `/impeccable init` once per project, then use its
   commands (`polish`, `audit`, `critique`, etc.) for design QA; a PostToolUse
   hook already runs its detector after Edit/Write/MultiEdit on UI files.

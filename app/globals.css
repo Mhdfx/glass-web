@@ -1,42 +1,51 @@
 @import "tailwindcss";
 
 @theme {
-  /* ————— Palette « atelier d'art verrier » ————— */
-  --color-ink-950: #0b0a08;
-  --color-ink-900: #12100d;
-  --color-ink-800: #1a1713;
-  --color-ink-700: #262119;
+  /* ————— Palette v2 « lumière froide » —————
+     Porcelaine (fonds), fumée (encre froide), chrome (filets).
+     Le laiton de la marque est le SEUL accent : logo, CTA, états actifs.
+     Une seule famille de gris (froide) sur toute la page. */
+  --color-porcelain-50: #f7f8f9;
+  --color-porcelain-100: #eff1f3;
+  --color-porcelain-200: #e4e7ea;
+  --color-porcelain-300: #d2d7db;
 
-  --color-ivory-50: #faf7f0;
-  --color-ivory-100: #f5f0e6;
-  --color-ivory-200: #ece4d4;
+  --color-smoke-950: #17191c;
+  --color-smoke-900: #212428;
+  --color-smoke-700: #43484e;
+  --color-smoke-600: #565c63;
+  --color-smoke-500: #697077;
+  --color-smoke-400: #8f959c;
+  --color-smoke-300: #b4bac0;
 
+  /* Accent de marque (couleur du logo) — usage strictement rationné */
   --color-brass-300: #e3c795;
   --color-brass-400: #d4b37c;
   --color-brass-500: #c9a66b;
   --color-brass-600: #a9884e;
   --color-brass-700: #86693a;
 
+  /* Tokens sombres conservés pour la lightbox (calque modal) */
+  --color-ink-950: #0b0a08;
+  --color-ink-800: #1a1713;
+  --color-ivory-50: #faf7f0;
+  --color-ivory-100: #f5f0e6;
+  --color-ivory-200: #ece4d4;
   --color-stone-300: #cfc8ba;
-  --color-stone-400: #a89f8d;
   --color-stone-500: #857c6b;
 
   --color-whatsapp: #25d366;
 
   /* ————— Typographie ————— */
-  --font-display: var(--font-fraunces), "Georgia", serif;
+  --font-display: var(--font-cormorant), "Georgia", serif;
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
 
-  /* ————— Ombres & effets ————— */
-  --shadow-glass: 0 8px 40px -12px rgb(0 0 0 / 0.55);
-  --shadow-brass: 0 10px 40px -10px rgb(201 166 107 / 0.35);
+  /* ————— Ombres — toujours teintées de la fumée, jamais de noir pur ————— */
+  --shadow-pane: 0 14px 44px -18px rgb(23 25 28 / 0.16);
+  --shadow-brass: 0 10px 36px -12px rgb(201 166 107 / 0.4);
 
-  --animate-shine: shine 2.8s ease-in-out infinite;
-}
-
-@keyframes shine {
-  0%, 100% { transform: translateX(-120%) skewX(-18deg); }
-  55%, 60% { transform: translateX(220%) skewX(-18deg); }
+  /* Courbe maison — décélération lourde, physique */
+  --ease-glass: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Entrée du hero en CSS pur : s'exécute dès le premier rendu,
@@ -45,10 +54,12 @@
   from {
     opacity: 0;
     transform: translateY(26px);
+    filter: blur(5px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+    filter: blur(0);
   }
 }
 
@@ -85,8 +96,8 @@ html.lenis body {
 }
 
 body {
-  background-color: var(--color-ink-950);
-  color: var(--color-ivory-100);
+  background-color: var(--color-porcelain-50);
+  color: var(--color-smoke-950);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
@@ -94,17 +105,19 @@ body {
 
 ::selection {
   background-color: var(--color-brass-500);
-  color: var(--color-ink-950);
+  color: var(--color-smoke-950);
 }
 
 /* Focus visible — accessibilité clavier */
 :focus-visible {
-  outline: 2px solid var(--color-brass-400);
+  outline: 2px solid var(--color-brass-600);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
 /* ————— Composants utilitaires ————— */
+/* Système de rayons unique : interactifs = pilule (rounded-full),
+   surfaces = 1rem (rounded-2xl), champs = 0.5rem (rounded-lg). */
 
 @utility container-site {
   margin-inline: auto;
@@ -119,43 +132,53 @@ body {
   text-wrap: balance;
 }
 
-/* Surface « verre » — clin d'œil au matériau */
-@utility glass-panel {
-  background: linear-gradient(
-    135deg,
-    rgb(255 255 255 / 0.06),
-    rgb(255 255 255 / 0.02) 40%,
-    rgb(201 166 107 / 0.04)
-  );
-  border: 1px solid rgb(255 255 255 / 0.08);
-  backdrop-filter: blur(12px);
+/* Panneau « plaque de verre posée » — blanc, filet chrome, ombre froide */
+@utility pane {
+  background: #ffffff;
+  border: 1px solid rgb(23 25 28 / 0.08);
+  box-shadow: var(--shadow-pane);
 }
 
-/* Trait lumineux en haut d'une carte (arête de verre) */
-@utility glass-edge {
-  position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    inset-inline: 0;
-    top: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgb(227 199 149 / 0.55),
-      transparent
-    );
-  }
-}
-
-/* Libellé de section — petit, espacé, laiton */
+/* Libellé de section — petit, espacé, fumée (le laiton reste réservé) */
 @utility section-label {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--color-brass-500);
+  color: var(--color-smoke-500);
+}
+
+/* Titre de section — Cormorant, encre fumée, traits gravés */
+@utility heading-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  color: var(--color-smoke-950);
+}
+
+/* Verre cannelé — texture CSS honnête (aucun SVG dessiné à la main) */
+@utility fluted {
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgb(23 25 28 / 0.05) 0px,
+    rgb(23 25 28 / 0.05) 1px,
+    transparent 1px,
+    transparent 14px
+  );
+}
+
+/* ————— Grain photographique ————— */
+/* Voile de bruit fixe : brise la platitude numérique du blanc.
+   Fixe + pointer-events-none = aucun repaint au scroll. */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
 }
 
 @media (prefers-reduced-motion: reduce) {
