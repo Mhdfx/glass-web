@@ -28,7 +28,8 @@
 | `.claude/skills/` | The installed design skills (ui-ux-pro-max, impeccable, design-taste-frontend, high-end-visual-design, design-motion-principles, redesign-existing-projects, etc.). |
 | `graphify-out/` | Generated code graph (git-ignored; auto-rebuilt by git hooks on every commit/checkout). Query with `graphify query/explain/path`. |
 | `skills-lock.json` | Skill installer's lockfile. |
-| `.agents/ .cursor/ .codex/ .gemini/ .windsurf/ .continue/ .roo/ .trae/ .kiro/ .qoder/ .augment/ .codebuddy/ .factory/ .kilocode/ .opencode/ .warp/ .impeccable/ .github/` | Mirror configs the skill installer dropped for OTHER AI editors. Only useful if you use those tools; harmless to keep, safe to delete any you'll never use. |
+| `.impeccable/` | Impeccable hook cache (tiny, regenerates). |
+| ~~17 mirror folders~~ | The skill installer's duplicate bundles for other AI editors (`.cursor`, `.codex`, `.gemini`…) were **deleted 2026-07-07** (~50 MB, 2,692 files). ⚠ Lesson: some `.claude/skills/*` entries were Windows **junctions** into `.agents/skills/` — they were materialized into real folders before deletion. To use another editor later, re-run the skill installer for that platform. |
 | `.git/hooks/post-commit`, `post-checkout` | Graphify auto-rebuild hooks — **contain the machine-specific pinned Python path** (`_PINNED`); re-pin if graphify is reinstalled. Not versioned by git. |
 
 ## 3. Source material & pipelines (not served — feeds the site)
