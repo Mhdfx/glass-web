@@ -1,0 +1,18 @@
+{
+  "_comment": "Impeccable design-QA hook. REQUIRES the impeccable skill installed in the project (.claude/skills/impeccable/ must exist — run /impeccable init or copy the folder from the reference repo). Merge this 'hooks' block into the project's .claude/settings.local.json (or settings.json).",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR}/.claude/skills/impeccable/scripts/hook.mjs\"",
+            "timeout": 5,
+            "statusMessage": "Checking UI changes"
+          }
+        ]
+      }
+    ]
+  }
+}
