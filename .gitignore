@@ -31,3 +31,6 @@ next-env.d.ts
 
 # graphify — generated code graph (rebuilt by hooks / graphify update)
 graphify-out/
+
+# impeccable design-hook cache — local dev only
+.impeccable/
