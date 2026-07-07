@@ -4,7 +4,14 @@
 > Read this file first; it explains what the site is, how it's built, where every
 > piece of data lives, what remains to be done, and how to deploy it.
 
-Last updated: 2026-07-06 · Status: **built & verified locally, NOT deployed yet** (client wants to test first; domain not purchased yet).
+Last updated: 2026-07-07 · Status: **built & verified locally, NOT deployed yet** (domain not purchased yet).
+
+> **Design note (2026-07-07):** master now carries the light **« lumière froide »
+> v2 design** (porcelain/smoke palette, Cormorant Garamond display, full-bleed
+> photo hero, brass as sole accent) — chosen by the client over the dark
+> version. The dark designs remain on the `redesign` (polished) branch and in
+> pre-merge history. Palette/typography references below that mention the dark
+> theme describe the retired v1.
 
 ---
 
