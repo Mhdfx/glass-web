@@ -17,12 +17,8 @@ export interface GalleryItem {
 
 /**
  * Photos réelles de l'atelier (traitées via scripts/process-client-photos.mjs).
- * Les 3 anciens visuels d'ambiance [PLACEHOLDER] (porte-vitrail, coupole-vitrail,
- * douche-italienne) ont été retirés le 2026-07-06 à la demande du client —
- * la catégorie « vitraux » n'a plus de photo et son filtre est masqué
- * automatiquement (voir galleryFilters ci-dessous). Rajouter simplement un
- * item `category: "vitraux"` quand de vraies photos arriveront : le filtre
- * réapparaîtra tout seul.
+ * Les anciens visuels d'ambiance [PLACEHOLDER] ont été retirés le 2026-07-06 ;
+ * les vitraux d'art sont de retour depuis le 2026-07-07 (photo-09, photo-16).
  */
 /**
  * Chaque tuile épouse le format natif de sa photo (aucun zoom) et
@@ -144,6 +140,20 @@ export const galleryItems: GalleryItem[] = [
     alt: "Vue d'ensemble d'un escalier avec garde-corps en verre trempé",
     caption: "Garde-corps en verre — vue d'ensemble",
     category: "structurel",
+  },
+  {
+    src: "/images/gallery/porte-vitrail.jpg",
+    alt: "Porte en vitrail avec motifs floraux et géométriques colorés",
+    caption: "Porte en vitrail — motifs floraux",
+    category: "vitraux",
+    span: "tall",
+  },
+  {
+    src: "/images/gallery/vitrail-floral.jpg",
+    alt: "Détail de vitrail peint à la main, motifs floraux et arabesques",
+    caption: "Vitrail peint à la main — détail motif",
+    category: "vitraux",
+    span: "tall",
   },
 ];
 

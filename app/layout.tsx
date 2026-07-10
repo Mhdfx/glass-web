@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     url: company.siteUrl,
     siteName: company.name,
     title: `${company.name} — Miroiterie, vitraux & verre sur-mesure`,
-    description: `Artisanat verrier haut de gamme à ${company.shortLocation} : miroirs antiques, vitraux d'art, verre trempé structurel. ${yearsOfExperience()} ans de savoir-faire.`,
+    description: `Artisanat verrier haut de gamme à ${company.shortLocation} : miroirs antiques, vitraux d'art, verre trempé structurel. ${yearsOfExperience} ans de savoir-faire.`,
     images: [{ url: "/images/og.jpg", width: 1200, height: 630 }],
   },
   robots: { index: true, follow: true },
@@ -85,6 +85,12 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${cormorant.variable} ${manrope.variable}`}>
       <body>
+        <a
+          href="#accueil"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:bg-brass-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-smoke-950"
+        >
+          Aller au contenu
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}

@@ -49,6 +49,10 @@ const jobs = [
   { src: "photo-14.jpeg", out: "gallery/garde-corps-vue.jpg", w: 1200, h: 832, crop: "attention" },
   { src: "photo-15.jpeg", out: "gallery/residence-vitrages.jpg", w: 1200, h: 1600, crop: "attention" },
   { src: "photo-17.jpeg", out: "gallery/agencement-cafe.jpg", w: 1000, h: 1700, crop: "attention", trim: true },
+
+  // Vitraux d'art — photos réelles (réactive le filtre galerie)
+  { src: "photo-09.jpeg", out: "gallery/porte-vitrail.jpg", w: 1200, h: 1600, crop: "center" },
+  { src: "photo-16.jpeg", out: "gallery/vitrail-floral.jpg", w: 1200, h: 1600, crop: "center" },
 ];
 
 const positions = {

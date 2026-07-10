@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
 import { company } from "@/data/company";
 import { PhoneIcon } from "@/components/ui/icons";
 
@@ -39,10 +40,25 @@ function useActiveSection() {
   return active;
 }
 
+/** Évite aria-current côté serveur — même HTML au premier rendu client */
+function useHydrated() {
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
+}
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const active = useActiveSection();
+  const hydrated = useHydrated();
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+
+  /** Sur une sous-page, les ancres pointent vers la home (« /#galerie ») */
+  const navHref = (hash: string) => (onHome ? hash : `/${hash}`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -75,7 +91,7 @@ export default function Header() {
       <div className="container-site flex h-[72px] items-center justify-between gap-4">
         {/* Logo */}
         <a
-          href="#accueil"
+          href={onHome ? "#accueil" : "/"}
           className="flex items-center gap-2.5"
           aria-label={`${company.name} — retour à l'accueil`}
         >
@@ -89,11 +105,11 @@ export default function Header() {
             laiton permanent sur la section active */}
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Navigation principale">
           {navLinks.map((link) => {
-            const isActive = active === link.href;
+            const isActive = onHome && hydrated && active === link.href;
             return (
               <a
                 key={link.href}
-                href={link.href}
+                href={navHref(link.href)}
                 aria-current={isActive ? "true" : undefined}
                 className={`group relative py-1 text-sm font-medium transition-colors duration-200 ${
                   isActive
@@ -122,7 +138,7 @@ export default function Header() {
             {company.phoneDisplay}
           </a>
           <a
-            href="#devis"
+            href={navHref("#devis")}
             className="inline-flex min-h-[44px] cursor-pointer items-center rounded-full bg-brass-500 px-6 py-2.5 text-sm font-semibold text-smoke-950 transition-all duration-300 hover:bg-brass-400 hover:shadow-brass active:scale-[0.98]"
           >
             Demander un devis
@@ -169,10 +185,10 @@ export default function Header() {
           {navLinks.map((link, i) => (
             <a
               key={link.href}
-              href={link.href}
+              href={navHref(link.href)}
               onClick={() => setOpen(false)}
               className={`border-b border-smoke-950/5 py-4 font-display text-3xl font-medium transition-all duration-300 hover:text-brass-700 ${
-                active === link.href ? "text-brass-700" : "text-smoke-950"
+                onHome && hydrated && active === link.href ? "text-brass-700" : "text-smoke-950"
               } ${
                 open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
               }`}
@@ -183,7 +199,7 @@ export default function Header() {
           ))}
           <div className="mt-6 flex flex-col gap-3">
             <a
-              href="#devis"
+              href={navHref("#devis")}
               onClick={() => setOpen(false)}
               className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-brass-500 px-6 py-3 text-sm font-semibold text-smoke-950 transition-transform active:scale-[0.98]"
             >

@@ -36,7 +36,7 @@ in French — useful for background but this file supersedes them for current st
 | Framework | **Next.js 16** (App Router, Turbopack) | React 19, TypeScript 6 (strict) |
 | Styling | **Tailwind CSS v4** | Tokens defined in CSS via `@theme` in `app/globals.css` — there is **no `tailwind.config`** file |
 | Animations | **Framer Motion 12** | Scroll reveals, gallery lightbox, form states |
-| 3D | **react-three-fiber + drei + three** | Decorative glass prism in the hero (`components/three/GlassScene.tsx`), lazy-loaded, disabled on reduced-motion |
+| 3D | ~~react-three-fiber + drei + three~~ | **UNUSED.** `components/three/GlassScene.tsx` is not imported anywhere; the `three`/`@react-three/*` deps are dead weight (~30 MB in node_modules). Safe to delete deps + file. |
 | Smooth scroll | **Lenis** | `components/SmoothScroll.tsx`, mounted in root layout |
 | Email | **Resend** | Only in `/api/quote`; optional (see §7) |
 | Images | **sharp** | Used by the two scripts in `scripts/` only |
@@ -86,21 +86,26 @@ app/
                           → Stats → QuoteForm → Contact → Footer → WhatsAppFloat
   globals.css             Tailwind v4 @theme tokens (palette, fonts, shadows) + hero CSS
                           animation + Lenis/scroll fixes. THE design-token file.
+  expertises/[slug]/      4 detailed service pages (SSG). One dynamic route
+                          renders miroiterie/vitraux/structurel/menuiserie from
+                          data/service-details.ts. Reached by clicking any card
+                          in the homepage Expertises bento. (see §4.1)
   mentions-legales/       Legal notice page (reads company.ts)
-  robots.ts / sitemap.ts  Generated from company.siteUrl
+  robots.ts / sitemap.ts  Generated from company.siteUrl (sitemap includes the 4 expertise pages)
   icon.svg                Favicon
   api/health/route.ts     Returns ok — used by Docker healthcheck & deploy.sh
   api/quote/route.ts      POST endpoint of the quote form (see §7)
 
 components/
-  layout/    Header (fixed, scroll-aware), Footer, WhatsAppFloat (floating CTA)
+  layout/    Header (fixed, scroll-aware; hash links become /#… on sub-pages), Footer, WhatsAppFloat
   sections/  One file per homepage section (Hero, WhyUs, Expertises, Gallery,
              Stats, QuoteForm, Contact)
-  three/     GlassScene.tsx — R3F glass prism (hero decoration)
-  ui/        Button, icons (inline SVG set), Reveal (hydration-safe scroll reveal)
+  three/     GlassScene.tsx — UNUSED R3F prism, not imported anywhere (dead code; three/* deps unused)
+  ui/        Button, icons (inline SVG set), Reveal (hydration-safe scroll reveal),
+             Carousel (scroll-snap, arrows+dots, a11y), Accordion (FAQ)
   SmoothScroll.tsx  Lenis wrapper
 
-data/        company.ts · services.ts · gallery.ts   ← edit content HERE
+data/        company.ts · services.ts · gallery.ts · service-details.ts   ← edit content HERE
 lib/         whatsapp.ts — builds wa.me links (generic + pre-filled quote message)
 scripts/     process-client-photos.mjs  — pipeline used on raw client photos
              (trim, mirror-flop, top-extract, attention crop → public/images/gallery)
@@ -111,6 +116,40 @@ public/images/  hero/, og.jpg, expertises/ (4), gallery/ (16 processed JPGs)
 Dockerfile · docker-compose.yml · deploy.sh · nginx/   ← deployment (see §8)
 .env.example                                            ← env template (see §7)
 ```
+
+## 4.1. Expertise detail pages (added 2026-07-07)
+
+Each of the 4 homepage Expertises cards is now **fully clickable** and links to a
+dedicated, in-depth page at **`/expertises/<slug>`** (slug = the `ServiceCategoryId`:
+`miroiterie`, `vitraux`, `structurel`, `menuiserie`). Goal: a visitor who knows
+nothing about glasswork can understand each service.
+
+- **Content lives in `data/service-details.ts`** (single source of truth, same
+  pattern as the other data files). Per service: educational intro ("what is it"),
+  benefits, **process steps**, **applications**, a **techniques glossary**, and a
+  **FAQ**, plus per-page SEO (`metaTitle`/`metaDescription`). Content is
+  research-backed (glass-trade sources cited in the file header). To edit copy →
+  edit this file only.
+- **Page template: `app/expertises/[slug]/page.tsx`** — one dynamic route,
+  `generateStaticParams` pre-renders all 4 as static HTML (SSG), `generateMetadata`
+  sets per-page SEO + OpenGraph + canonical, and emits `Service` JSON-LD. Sections:
+  hero (brand veil, breadcrumb) → intro → benefits → process carousel → applications
+  carousel → **realisations photo carousel** (reuses `data/gallery.ts`, filtered by
+  category) → glossary → FAQ accordion → CTA → cross-links to the other 3 pages.
+- **Reusable UI added:** `components/ui/Carousel.tsx` (scroll-snap track, prev/next
+  arrows that disable at the ends, synced dot indicators, keyboard ← →, respects
+  reduced-motion) and `components/ui/Accordion.tsx` (single-open FAQ, grid-rows
+  collapse animation, full aria wiring).
+- **Header is now route-aware:** on sub-pages the nav hash links render as `/#…`
+  (via `usePathname`) so "Galerie", "Devis", etc. jump back to the homepage
+  sections; active-section highlight is gated to the homepage only.
+- Cards: `components/sections/Expertises.tsx` is now a plain server component (the
+  old `goToGallery` custom-event filter was removed; the Gallery still listens for
+  `gallery:filter` harmlessly). Whole card = one `<Link>`, surface style + hover lift
+  moved onto the link element.
+- **Verified 2026-07-07:** clean production build (4 SSG pages), browser-tested —
+  navigation, all 3 carousels (arrows+dots+scroll), FAQ single-open, cross-links,
+  breadcrumb, mobile hero, per-page titles, invalid slug → 404, sitemap lists all 4.
 
 ## 5. Design system (quick reference)
 

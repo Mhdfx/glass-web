@@ -41,7 +41,6 @@ export const company = {
   },
 } as const;
 
-/** Années d'expérience, calculées automatiquement */
-export function yearsOfExperience(): number {
-  return new Date().getFullYear() - company.foundedYear;
-}
+/** Années d'expérience — constante évaluée au build (pas de décalage SSR) */
+export const yearsOfExperience =
+  new Date().getFullYear() - company.foundedYear;

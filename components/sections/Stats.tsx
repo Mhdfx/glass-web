@@ -45,7 +45,7 @@ function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
 export default function Stats() {
   const stats: { value: React.ReactNode; label: string }[] = [
     {
-      value: <CountUp target={yearsOfExperience()} />,
+      value: <CountUp target={yearsOfExperience} />,
       label: `ans d'expérience, depuis ${company.foundedYear}`,
     },
     company.projectsCount
