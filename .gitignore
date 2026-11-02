@@ -34,3 +34,6 @@ graphify-out/
 
 # impeccable design-hook cache — local dev only
 .impeccable/
+
+.vercel
+.env*.local
