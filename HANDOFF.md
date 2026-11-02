@@ -4,7 +4,7 @@
 > Read this file first; it explains what the site is, how it's built, where every
 > piece of data lives, what remains to be done, and how to deploy it.
 
-Last updated: 2026-07-07 · Status: **built & verified locally, NOT deployed yet** (domain not purchased yet).
+Last updated: 2026-11-02 · Status: **deployed on Vercel** (project `glass-web`, prod URL https://glass-web-sigma.vercel.app; intended public URL https://chaimaeglass.vercel.app). `siteUrl` reads `NEXT_PUBLIC_SITE_URL`, defaulting to https://chaimaeglass.vercel.app; set it to https://chaimaeglass.ma once that domain is bought.
 
 > **Design note (2026-07-07):** master now carries the light **« lumière froide »
 > v2 design** (porcelain/smoke palette, Cormorant Garamond display, full-bleed
@@ -277,4 +277,4 @@ See `CLAUDE.md` for how AI assistants should query it (`graphify explain`,
 | WhatsApp message wording | `lib/whatsapp.ts` |
 | Quote email content/recipient | `app/api/quote/route.ts` + `.env` |
 | Hero 3D prism | `components/three/GlassScene.tsx` |
-| Domain in server config | `nginx/site.conf` + `data/company.ts` (`siteUrl`) |
+| Domain in server config | Vercel env `NEXT_PUBLIC_SITE_URL` (or the default in `data/company.ts`) + `nginx/site.conf` for the VPS |

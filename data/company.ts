@@ -33,7 +33,8 @@ export const company = {
     "https://www.google.com/maps?q=A%C3%AFn%20Seba%C3%A2%2C%20Casablanca&z=14&output=embed" as
       | string
       | null,
-  siteUrl: "https://chaimaeglass.ma",
+  /** Domaine public — surchargeable via NEXT_PUBLIC_SITE_URL (ex. futur chaimaeglass.ma) */
+  siteUrl: (process.env.NEXT_PUBLIC_SITE_URL || "https://chaimaeglass.vercel.app").replace(/\/$/, ""),
   /** Réseaux sociaux — à ajouter plus tard */
   social: {
     instagram: null as string | null,
